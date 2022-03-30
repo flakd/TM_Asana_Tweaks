@@ -30,23 +30,27 @@ function log2_old(msg, callerName) {
 }
 
 function log2(level, callerName) {
-  if (!isLoggingOn) return;
-  if (callerName === undefined || callerName === "") {
-    callerName = log2.caller.name;
-    console.warn("In 'log2()': PARAM {callerName} is NULL => using {log2.caller.name}");
-    if (callerName === undefined || callerName === "") {
-      callerName = "anonymous";
-      console.warn("In 'log3()': PARAM {log2.caller.name} is NULL => using 'anonymous'");
-    }
-  }
+  if (!isLoggingOn) return;  
+
   let consoleFunc;
-  switch (level){
+  switch (level) {
     case 1: consoleFunc = console.error; break;
     case 2: consoleFunc = console.warn; break;
     case 3: consoleFunc = console.log; break;
-    case 4: consoleFunc = console.debug; break;            
-    default: consoleFunc = console.log; break;
+    case 4: consoleFunc = console.debug; break;
+    default:
+      throw `LOGGING ERROR => 1st PARAM('${level}') is invalid. Only values [1,2,3, or 4] are valid!`
+  }  
+
+  if (callerName === undefined || callerName === "") {
+    callerName = log2.caller.name;
+    console.debug("In 'log2()': PARAM {callerName} is NULL => using {log2.caller.name}");
+    if (callerName === undefined || callerName === "") {
+      callerName = "anonymous";
+      console.debug("In 'log3()': PARAM {log2.caller.name} is NULL => using 'anonymous'");
+    }
   }
+
     
   function writeIt(loc, msg) {
     if (msg === undefined) {

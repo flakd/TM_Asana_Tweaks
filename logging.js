@@ -63,10 +63,10 @@ function log2(level, callerName) {
       if (msg1 === undefined) {
         msg1 = "";
       } else {
-        msg1 = " => " + msg;
+        msg1 = " => " + msg1;
       }    
     }
-    consoleFunc("%c%s: %c'%s()'%c%s.", logStyle1, loc, logStyle2, callerName, logStyle1, msg);
+    consoleFunc("%c%s: %c'%s()'%c%s.", logStyle1, loc, logStyle2, callerName, logStyle1, msg1);
   };
 
 
@@ -88,11 +88,9 @@ function log2(level, callerName) {
       consoleFunc("%c--------------------------------------------", logStyle4);
     },
     next: function next(callNextName) {
-      prepNextPrevColors();
       consoleFunc("%cInside %c'%s()', %cNext: %c'%s().'", logStyle1, logStyle2, callerName, logStyle3, logStyle4, callNextName);
     },
     prev: function prev(callNextName) {
-      prepNextPrevColors();
       consoleFunc("%cInside %c'%s()', %cPrev: %c'%s().'", logStyle1, logStyle2, callerName, logStyle3, logStyle4, callNextName);
     }
   }); //END return of log() function

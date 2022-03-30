@@ -4,7 +4,10 @@ const logStyle_Green = 'color:green;';
 const logStyle_MaroonUnder = 'color:maroon; font-weight: 900; text-decoration: underline;';
 const logStyle_Maroon = 'color:maroon; font-weight: 900;';
 const logStyle_White = 'color:white;';
-let logStyle1, logStyle2, logStyle3, logStyle4;
+const logStyle1 = logStyle_White;
+const logStyle2 = logStyle_Green;
+const logStyle3 = logStyle_White; //logStyle_MaroonUnder;
+const logStyle4 = logStyle_Green; //logStyle_Maroon;
 
 //let isLoggingOn;
 window.isLoggingOn = true; //false
@@ -52,26 +55,30 @@ function log2(level, callerName) {
   }
 
     
-  function writeIt(loc, msg) {
-    if (msg === undefined) {
-      msg = "";
+  function writeIt(loc, msg1, msg2) {
+    if (loc === undefined || loc === null) {
+      if (msg1 ===undefined || msg2 === undefined) throw "UNDEFINED msg1 OR msg2 in 'writeIt()"
+      consoleFunc("%c%s: %c%s% %c.", logStyle1, msg1, logStyle2, msg2, logStyle1);
     } else {
-      msg = " => " + msg;
-    }    
+      if (msg1 === undefined) {
+        msg1 = "";
+      } else {
+        msg1 = " => " + msg;
+      }    
+    }
     consoleFunc("%c%s: %c'%s()'%c%s.", logStyle1, loc, logStyle2, callerName, logStyle1, msg);
   };
-  function prepNextPrevColors(){
-    logStyle1 = logStyle_White;
-    logStyle2 = logStyle_Green;
-    logStyle3 = logStyle_MaroonUnder;
-    logStyle4 = logStyle_Maroon;
-  }
+
+
   return ({ //  return object containing specific funcs(top, btm, next, prev)
+    w: function w(msg1,msg2)  {
+      writeIt(null, msg1, msg2)
+    },
     inside: function inside(msg){
       writeIt("Inside of ",msg);      
     },
     top: function top(msg) {
-      consoleFunc("%c                                            ", logStyle1);
+      //consoleFunc("%c                                            ", logStyle1);
       // ("%cTop of%c: '%s()'",logStyle1,logStyle2,callerName);
       writeIt("Top of ",msg);
     },

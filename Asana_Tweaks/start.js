@@ -18,5 +18,6 @@
 			};
 
     }
-		start(XMLHttpRequest.prototype.open);
+    window.start = start;
+		//window.start(XMLHttpRequest.prototype.open);
 		//------------------------------------------------ END

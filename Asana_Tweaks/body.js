@@ -373,58 +373,6 @@
   }
 
 
-
-  function getBulletsAsArray() {
-    const bullets = [
-
-      [">>>>", "backgroundColor", "#ffeeff"],
-      [">>>>", "color", "black"],
-
-      [">>>", "fontStyle", "italic"],
-      [">>>", "textDecoration", "underline overline"],
-      [">>>", "fontWeight", "900"],
-      [">>>", "textShadow", "2px 2px #FF0000"],
-
-
-      //[">>",	"fontStyle"					,	"italic"		],
-      ["[>", "textDecoration", "underline overline"],
-      ["[>", "backgroundColor", "#AAAAAA"],
-      ["[>", "color", "black"],
-
-      ["FUP", "backgroundColor", "turquoise"],
-      ["{*", "backgroundColor", "red"],
-      ["{+", "backgroundColor", "orange"],
-      ["{^", "backgroundColor", "DeepPink"],
-
-      ["##", "backgroundColor", "blue"],
-      ["##", "color", "white"],
-
-      ["√", "backgroundColor", "purple"],
-      ["√", "color", "white"],
-
-      ["√√", "backgroundColor", "white"],
-      ["√√", "color", "purple"],
-
-      ["{~", "backgroundColor", "beige"],
-      ["{~", "color", "black"],
-
-      ["**", "backgroundColor", "white"],
-      ["**", "color", "black"],
-
-      ["~~", "backgroundColor", "yellow"],
-      ["~~", "color", "black"],
-
-      ["<>", "backgroundColor", "brown"],
-      ["<>", "color", "yellow"],
-
-      ["[]", "fontVariant", "small-caps"],
-
-      ["{}", "fontWeight", "900"]
-
-    ];
-    return bullets;
-  }
-
   function conditionalHighlighting() {
     logger(2).top();
 

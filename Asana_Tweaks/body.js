@@ -32,7 +32,7 @@
 
 
 
-    logger(2).next("staticUI.setUIPanesWidths");
+    logger(2).next("staticUI.setUIPanesWidths()");
     staticUI.setUIPanesWidths();
 
     logger(2).next("staticUI.setup_HelpCheatSheet()");

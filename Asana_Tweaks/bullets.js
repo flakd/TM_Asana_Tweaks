@@ -1,7 +1,7 @@
-function getBulletsAsArray() {
+function getHLCodesAsArray() {
   const bullets = [
 
-    ["|1", "backgroundColor", "#ffeeff"],
+    ["|1", "backgroundColor", "white"],
     ["|1", "color", "black"],
 
     ["|2", "backgroundColor", "yellow"],

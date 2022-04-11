@@ -399,6 +399,13 @@
         *    if this is already completed -- if so, we
         *    are going to set SPECIAL COMPLETED styling
         ******************************************************/
+
+      if (i == 0) {
+        task.classList.add("blinking");
+      }
+      console.log("task #: $s,   content: $s,   classList: $s", i, content, task.classList);
+
+      
       if (task.classList.contains(completedTaskClassName)) {	//IF "Completed Task"
 
         if (isLoggingOn) console.log("BUT This Task is COMPLETED=>'%c', CLASS contains '%s', FULL CLASSLIST='%c'", content, completedTaskClassName, task.classList);

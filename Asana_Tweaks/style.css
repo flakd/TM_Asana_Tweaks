@@ -15,4 +15,20 @@
 /*
 .SpreadsheetTaskName--childFocused { caret-shape: block; } " // this CSS unsupported in Chrome as of 2022-01-25
 */
+.blinking {
 
+    animation: opacity 5s ease-in-out infinite;
+    opacity: 1;
+}
+@keyframes opacity {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0
+  }
+
+  100% {
+    opacity: 1;
+  }
+}

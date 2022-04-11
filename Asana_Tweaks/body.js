@@ -81,10 +81,10 @@
 
       function openHelpOnKeyPress() {
         let w = window.open('', "", "width=600, height=400, scrollbars=no");
-        w.document.body.innerHTML = getHighlightBulletsHelpHTML();
+        w.document.body.innerHTML = getStyleHelpHTML();
       }
 
-      function getHighlightBulletsHelpHTML() {
+      function getStyleHelpHTML() {
         const helpCellTextArray = getBulletsAsArray();
 
         let helpRowArray = [];

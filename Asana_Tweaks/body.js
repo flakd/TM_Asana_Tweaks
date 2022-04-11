@@ -14,6 +14,7 @@
     logger(2).next("setupDynamicUI()");
     setupDynamicUI();
 
+    addEditorListeners();
 
     // Will execute myCallback every 10 seconds
     logger(2).next("window.setInterval(conditionalHighlighting, 10000);");
@@ -22,6 +23,10 @@
 
     //---------------------------------------------------------
     logger(2).btm();
+  }
+ 
+  function addEditorListeners(){
+    
   }
 
   function doPermUIChanges() {
@@ -85,7 +90,7 @@
       }
 
       function getStyleHelpHTML() {
-        const helpCellTextArray = getBulletsAsArray();
+        const helpCellTextArray = getHLCodesAsArray();
 
         let helpRowArray = [];
         let helpRowInnerHTML, helpRowHTML, helpTableHTML;
@@ -351,7 +356,7 @@
   function conditionalHighlighting() {
     logger(2).top();
 
-    const bullets = getBulletsAsArray();
+    const bullets = getHLCodesAsArray();
 
     //let taskListItems = document.querySelectorAll('.SpreadsheetTaskName');
     let taskListItems = document.querySelectorAll(tasksSelector);

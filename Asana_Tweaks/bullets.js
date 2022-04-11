@@ -4,15 +4,11 @@ function getBulletsAsArray() {
     ["|1", "backgroundColor", "#ffeeff"],
     ["|1", "color", "black"],
 
-    ["|2", "fontStyle", "italic"],
-    ["|2", "textDecoration", "underline overline"],
-    ["|2", "fontWeight", "900"],
-    ["|2", "textShadow", "2px 2px #FF0000"],
+    ["|2", "backgroundColor", "yellow"],
+    ["|2", "color", "black"],
 
-    //[">>",	"fontStyle"					,	"italic"		],
-    ["|3", "textDecoration", "underline overline"],
-    ["|3", "backgroundColor", "#AAAAAA"],
-    ["|3", "color", "black"],
+    ["|3", "backgroundColor", "DeepPink"],
+    ["|3", "color", "white"],
 
     ["|4", "backgroundColor", "red"],
     
@@ -31,17 +27,20 @@ function getBulletsAsArray() {
 
     ["FUP", "backgroundColor", "turquoise"],
 
+    ["<>", "backgroundColor", "brown"],
+    ["<>", "color", "yellow"],
+
     ["√", "backgroundColor", "purple"],
     ["√", "color", "white"],
 
-    ["√√", "backgroundColor", "DeepPink"],
-    ["√√", "color", "white"],
+    ["√√", "backgroundColor", "#AAAAAA"],
+    ["√√", "textDecoration", "underline overline"],
+    ["√√", "color", "black"],
 
-    ["~~", "backgroundColor", "yellow"],
-    ["~~", "color", "black"],
-
-    ["<>", "backgroundColor", "brown"],
-    ["<>", "color", "yellow"],
+    ["~~", "fontStyle", "italic"],
+    ["~~", "textDecoration", "underline overline"],
+    ["~~", "fontWeight", "900"],
+    ["~~", "textShadow", "2px 2px #FF0000"],
 
     ["[]", "fontVariant", "small-caps"],
 

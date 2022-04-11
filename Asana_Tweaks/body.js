@@ -30,17 +30,11 @@
     logger(2).next("staticUI.hideUpgradeBtn()");
     staticUI.hideUpgradeBtn();
 
-
-
     logger(2).next("staticUI.setUIPanesWidths()");
     staticUI.setUIPanesWidths();
 
     logger(2).next("staticUI.setup_HelpCheatSheet()");
     staticUI.setup_HelpCheatSheet();
-
-    logger(2).next("staticUI.setup_StyleSheet()");
-    staticUI.setup_StyleSheet();
-
     //---------------------------------------------------------
     logger(2).btm();
   }

@@ -124,7 +124,7 @@
         //".SpreadsheetTaskName--childFocused { caret-shape: block; } " // this CSS unsupported in Chrome as of 2022-01-25
 
         ;
-      document.body.appendChild(sheet);
+      //document.body.appendChild(sheet);
     },
     setUIPanesWidths: function setUIPanesWidths() {
       let detailsPane = document.querySelector(".FullWidthPageStructureWithDetailsOverlay-detailsOverlay");

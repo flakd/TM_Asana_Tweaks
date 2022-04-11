@@ -9,31 +9,33 @@ function getBulletsAsArray() {
     ["|2", "fontWeight", "900"],
     ["|2", "textShadow", "2px 2px #FF0000"],
 
-
     //[">>",	"fontStyle"					,	"italic"		],
     ["|3", "textDecoration", "underline overline"],
     ["|3", "backgroundColor", "#AAAAAA"],
     ["|3", "color", "black"],
 
-    ["FUP", "backgroundColor", "turquoise"],
     ["|4", "backgroundColor", "red"],
+    
     ["|5", "backgroundColor", "orange"],
-    ["|6", "backgroundColor", "DeepPink"],
+    
+    ["|6", "backgroundColor", "purple"],
 
     ["|7", "backgroundColor", "blue"],
     ["|7", "color", "white"],
-
-    ["√", "backgroundColor", "purple"],
-    ["√", "color", "white"],
-
-    ["√√", "backgroundColor", "white"],
-    ["√√", "color", "purple"],
 
     ["|8", "backgroundColor", "beige"],
     ["|8", "color", "black"],
 
     ["|9", "backgroundColor", "white"],
     ["|9", "color", "black"],
+
+    ["FUP", "backgroundColor", "turquoise"],
+
+    ["√", "backgroundColor", "purple"],
+    ["√", "color", "white"],
+
+    ["√√", "backgroundColor", "DeepPink"],
+    ["√√", "color", "white"],
 
     ["~~", "backgroundColor", "yellow"],
     ["~~", "color", "black"],

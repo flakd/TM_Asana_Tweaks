@@ -2,13 +2,17 @@
 //  GLOBAL VARs
 //==========================
 
-const tasksSelector = '.SpreadsheetTaskName' +
+//const tasksSelector = '.SpreadsheetTaskName' +
+window.tasksSelector = '.SpreadsheetTaskName' +
   '.SpreadsheetTaskName--editable' +
   '.SpreadsheetGridTaskNameCell-taskName';
 
-const addElsToThisBarSelector = ".TopbarPageHeaderGlobalActions";
-const completedTaskClassName = "SpreadsheetGridTaskNameCell-taskName--completed";
-const burgerMenu = document.querySelector(".AsanaBaseTopbar--showingBreadcrumbs");
+//const addElsToThisBarSelector = ".TopbarPageHeaderGlobalActions";
+window.addElsToThisBarSelector = ".TopbarPageHeaderGlobalActions";
+//const completedTaskClassName = "SpreadsheetGridTaskNameCell-taskName--completed";
+window.completedTaskClassName = "SpreadsheetGridTaskNameCell-taskName--completed";
+//const burgerMenu = document.querySelector(".AsanaBaseTopbar--showingBreadcrumbs");
+window.burgerMenu = document.querySelector(".AsanaBaseTopbar--showingBreadcrumbs");
 
 const uiElsToHide = [	//each of these selectors are classes WHICH COULD return MULTIPLE elements
   ".PageToolbarStructure",

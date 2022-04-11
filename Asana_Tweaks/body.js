@@ -8,8 +8,8 @@
     console.log("numTimeRun = %s", window.numTimesRun++);
 
 
-    logger(2).next("setupStaticUI()");
-    setupStaticUI();
+    logger(2).next("doPermUIChanges()");
+    doPermUIChanges();
 
     logger(2).next("setupDynamicUI()");
     setupDynamicUI();
@@ -24,17 +24,17 @@
     logger(2).btm();
   }
 
-  function setupStaticUI() {
+  function doPermUIChanges() {
     logger(2).top();
     //==========================================================
-    logger(2).next("staticUI.hideUpgradeBtn()");
-    staticUI.hideUpgradeBtn();
+    logger(2).next("permUIChanges.hideUpgradeBtn()");
+    permUIChanges.hideUpgradeBtn();
 
-    logger(2).next("staticUI.setUIPanesWidths()");
-    staticUI.setUIPanesWidths();
+    logger(2).next("permUIChanges.setUIPanesWidths()");
+    permUIChanges.setUIPanesWidths();
 
-    logger(2).next("staticUI.setup_HelpCheatSheet()");
-    staticUI.setup_HelpCheatSheet();
+    logger(2).next("permUIChanges.setStyleHelp()");
+    permUIChanges.setStyleHelp();
     //---------------------------------------------------------
     logger(2).btm();
   }
@@ -63,7 +63,7 @@
     logger(2).btm();
   }
 
-  let staticUI = {
+  let permUIChanges = {
     hideUpgradeBtn: function hideUpgradeBtn() {
       let upgradeBtn = document.querySelector('[class*="UpgradeButton"]');
       if (upgradeBtn && upgradeBtn.style.display !== 'none') {
@@ -71,7 +71,7 @@
         if (isLoggingOn) console.log('upgrade button hidden');
       }
     },
-    setup_HelpCheatSheet: function setup_HelpCheatSheet() {
+    setStyleHelp: function setup_HelpCheatSheet() {
       //document.onkeydown = detectKeyPress_CTRL_KEY(191); // FORWARD SLASH key
       document.onkeydown = checkFor_Ctrl_Slash;
 

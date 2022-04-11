@@ -402,8 +402,8 @@
 
       if (i == 0) {
         task.classList.add("blinking");
+        logger(41).w1(`task #: ${i},   content: ${content},   classList: ${task.classList}`);
       }
-      console.log("task #: $s,   content: $s,   classList: $s", i, content, task.classList);
 
       
       if (task.classList.contains(completedTaskClassName)) {	//IF "Completed Task"
@@ -436,12 +436,10 @@
         //we found a(nother) bullet, so add it's styling
         if (content.includes(bullet)) {	// IF "Found Bullet"
           numBullets = numBullets + 1;
-          logger(3).inside(
-            "Bullet: '" + bullet + "' FOUND, " +
-            "StyleName: '" + styleName + "', " +
-            "StyleValue: '" + styleValue + "', " +
-            "Content Follows...");
-          logger(3, "Task Content: " + content);
+          logger(3).w1(
+            `TASK #${i}:   '${bullet}' FOUND => ${styleName}: ${styleValue}...`
+          );
+          logger(3).w2("Content: ", content);
 
           task.style[styleName] = styleValue;
         }	//ENDIF "Found Bullet"

@@ -101,25 +101,6 @@
       }
 
     },//END FUNCTION setUpHelpCheatSheet
-    setup_StyleSheet: function setup_StyleSheet() {
-      var sheet = document.createElement('style');
-      sheet.innerHTML =
-        //".someClass {color: red;}";
-        //".SpreadsheetRow--withShadedBackground < div { background-color: yellow;} " +
-        //".DraggableSpreadsheetTaskRow--withShadedBackground < div { background-color: yellow;} " +
-        ".SpreadsheetRow--withShadedBackground.DraggableSpreadsheetTaskRow--withShadedBackground > div > div { background-color: #004400;} " +
-        //".SpreadsheetTaskName SpreadsheetTaskName--editable SpreadsheetGridTaskNameCell-taskName
-        ".SpreadsheetTaskName--childFocused { background-color: #003300; color: white; } " +
-        "::selection {"
-        + "\n" +
-        "		background: #ff5500;"
-        + "\n" +
-        "}"
-        //".SpreadsheetTaskName--childFocused { caret-shape: block; } " // this CSS unsupported in Chrome as of 2022-01-25
-
-        ;
-      //document.body.appendChild(sheet);
-    },
     setUIPanesWidths: function setUIPanesWidths() {
       let detailsPane = document.querySelector(".FullWidthPageStructureWithDetailsOverlay-detailsOverlay");
       detailsPane.style.width = "40%";

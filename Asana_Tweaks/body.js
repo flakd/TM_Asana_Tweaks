@@ -389,6 +389,8 @@
 
       // OK, SO, we must have actual text, so set var 'content' to that text
       let content = task.textContent;
+      let innerTask = task.querySelector("div");
+      let taskText = innerTask.innerHTML;
       /*****************************************
         //  NOW that we've isolated/captured our ACTUAL
         //	Task TEXT, let's examine it more closely
@@ -402,7 +404,7 @@
 
       if (i == 0) {
         task.classList.add("blinking");
-        logger(41).w1(`task #: ${i},   content: ${content},   classList: ${task.classList}`);
+        logger(41).w(`task #: ${i},   content: ${taskText},   classList: ${task.classList}`);
       }
 
       
@@ -424,22 +426,22 @@
         // IF we've gotten THIS FAR, then we have
         // a VALID TASK, that is NOT COMPLETED
         *******************************************************/
+      let w1 = `TASK #${i}: `;
+      let w2 = `CONTENT: #${taskText}`;
+      logger(3).w(w1,w2);
 
       //let's check this task item to see if it has ANY of the bullets -- this will SET the *LAST* BULLET it finds!!!
       let numBullets = 0;
 
-      for (let i = 0; i < bullets.length; i++) {	//	FOR "Loop Through Bullets"
-        let bullet = bullets[i][0];
-        let styleName = bullets[i][1];
-        let styleValue = bullets[i][2];
+      for (let j = 0; j < bullets.length; j++) {	//	FOR "Loop Through Bullets"
+        let bullet = bullets[j][0];
+        let styleName = bullets[j][1];
+        let styleValue = bullets[j][2];
 
         //we found a(nother) bullet, so add it's styling
         if (content.includes(bullet)) {	// IF "Found Bullet"
           numBullets = numBullets + 1;
-          logger(3).w1(
-            `TASK #${i}:   '${bullet}' FOUND => ${styleName}: ${styleValue}...`
-          );
-          logger(3).w2("Content: ", content);
+          logger(3).w(`BULLET '${bullet}' =>`, `${styleName}: ${styleValue}`);
 
           task.style[styleName] = styleValue;
         }	//ENDIF "Found Bullet"

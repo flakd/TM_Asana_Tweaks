@@ -32,15 +32,15 @@
     opacity: 1;
   }
 }
-.√ {
+
+div.HStyle01, textarea.HStyle01 {/*  |1  */
   background-color: white;
   color: black;
 }
-.|1 {
-  background-color: white;
-  color: black;
+div.HStyle10, textarea.HStyle10 {/*  FUP  */
+  background-color: turquoise;
 }
-FUP {
-  background-color: white;
-  color: black;
+div.HStyle12, textarea.HStyle12 {/*  √  */
+  background-color: purple;
+  color: white;
 }

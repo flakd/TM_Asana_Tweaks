@@ -358,7 +358,6 @@
 
     const bullets = getHLCodesAsArray();
 
-    //let taskListItems = document.querySelectorAll('.SpreadsheetTaskName');
     let taskListItems = document.querySelectorAll(tasksSelector);
     let tli = taskListItems;
 
@@ -373,12 +372,8 @@
       *******************************************/
     for (let i = 0; i < tli.length; i++) {	// FOR "Loop through all Task Items"
 
-      // FOR EVERY Item/Task, PRINT it's index to the CONSOLE (if logging set in INIT())
-      if (isLoggingOn) console.log("TASK ITEM i=", i);
-
       // DBL-CHECK to see if there an item at this index in the tasklist,
       // otherwise ERROR TO CONSOLE & BREAK OUT OF ENTIRE loop ?????  -- or just CONTINUE ?????
-      //if ( !tli[i] ) { helpers.nullError(this, 41); return; }
       if (!tli[i]) { helpers.nullError(this, 41); continue; }
 
       // SO we must have an item, so set var 'task' to that item
@@ -389,12 +384,12 @@
 
       // OK, SO, we must have actual text, so set var 'content' to that text
       let content = task.textContent;
-      let innerTask = task.querySelector("div");
-      let taskText = innerTask.innerHTML;
       /*****************************************
         //  NOW that we've isolated/captured our ACTUAL
         //	Task TEXT, let's examine it more closely
         ************************************************/
+      let innerTask = task.querySelector("div");
+      let taskText = innerTask.innerHTML;
 
       /******************************************************
         *    BEFORE we EVEN CHECK for bullets, let's see
@@ -402,12 +397,6 @@
         *    are going to set SPECIAL COMPLETED styling
         ******************************************************/
 
-      if (i == 0) {
-        task.classList.add("blinking");
-        logger(41).w(`task #: ${i},   content: ${taskText},   classList: ${task.classList}`);
-      }
-
-      
       if (task.classList.contains(completedTaskClassName)) {	//IF "Completed Task"
 
         if (isLoggingOn) console.log("BUT This Task is COMPLETED=>'%c', CLASS contains '%s', FULL CLASSLIST='%c'", content, completedTaskClassName, task.classList);
@@ -426,9 +415,7 @@
         // IF we've gotten THIS FAR, then we have
         // a VALID TASK, that is NOT COMPLETED
         *******************************************************/
-      let w1 = `TASK #${i}: `;
-      let w2 = `CONTENT: #${taskText}`;
-      logger(3).w(w1,w2);
+      logger(3).w(`TASK: `, `${ i }`, `  CONTENT: `, `${ taskText }`);
 
       //let's check this task item to see if it has ANY of the bullets -- this will SET the *LAST* BULLET it finds!!!
       let numBullets = 0;
@@ -441,7 +428,10 @@
         //we found a(nother) bullet, so add it's styling
         if (content.includes(bullet)) {	// IF "Found Bullet"
           numBullets = numBullets + 1;
-          logger(3).w(`BULLET '${bullet}' =>`, `${styleName}: ${styleValue}`);
+          if (bullet=="√") task.classList.add("\\" + bullet);
+          task.classList.add(bullet);
+          logger(41).w("ClassList: ", task.classList);
+          logger(41).w(`BULLET '${bullet}' =>`, `${styleName}: ${styleValue}`);
 
           task.style[styleName] = styleValue;
         }	//ENDIF "Found Bullet"

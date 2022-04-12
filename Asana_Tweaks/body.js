@@ -388,8 +388,12 @@
         //  NOW that we've isolated/captured our ACTUAL
         //	Task TEXT, let's examine it more closely
         ************************************************/
-      let innerTask = task.querySelector("div");
-      let taskText = innerTask.innerHTML;
+      let innerTaskDiv = task.querySelector("div");
+      let innerTaskTA = task.querySelector("textarea");
+      innerTaskTA.onchange = function(){
+        console.log("changed from: %s to %s", innerTaskTA, innerTaskTA);
+      }
+      let taskText = innerTaskDiv.innerHTML;
 
       /******************************************************
         *    BEFORE we EVEN CHECK for bullets, let's see
@@ -428,10 +432,9 @@
         //we found a(nother) bullet, so add it's styling
         if (content.includes(bullet)) {	// IF "Found Bullet"
           numBullets = numBullets + 1;
-          if (bullet=="√") task.classList.add("\\" + bullet);
-          task.classList.add(bullet);
-          logger(41).w("ClassList: ", task.classList);
-          logger(41).w(`BULLET '${bullet}' =>`, `${styleName}: ${styleValue}`);
+          //if (bullet=="√") task.classList.add("\\" + bullet);
+          task.classList.add(styleName);
+          logger(41).w(`BULLET '${bullet}' =>`, `${styleName}: ${styleValue}`,"ClassList: ", task.classList);
 
           task.style[styleName] = styleValue;
         }	//ENDIF "Found Bullet"

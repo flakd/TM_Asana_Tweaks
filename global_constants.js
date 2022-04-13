@@ -20,11 +20,6 @@ const uiElsToHide = [	//each of these selectors are classes WHICH COULD return M
   ".PageToolbarStructure.ProjectSpreadsheetGridPageToolbar",
   ".PageToolbarStructure--withoutBottomBorder.PageToolbarStructure.ProjectSpreadsheetGridPageToolbar",
 
-  //".PageToolbarStructure--withSeparatorDots",
-  //".PageToolbarStructure--withSeparatorDots.PageToolbarStructure--withoutBottomBorder",
-  //".PageToolbarStructure--withSeparatorDots.PageToolbarStructure--withoutBottomBorder.PageToolbarStructure",
-  //".PageToolbarStructure--withSeparatorDots.PageToolbarStructure--withoutBottomBorder.PageToolbarStructure.ProjectSpreadsheetGridPageToolbar",
-
   ".ProjectSpreadsheetGridPageToolbar",
   ".ProjectSpreadsheetAddTaskAndAggregationRow",
   ".ProjectSpreadsheetAddTaskAndAggregationRow-stickyCell.ProjectSpreadsheetAddTaskAndAggregationRow-stickyCell--compact",

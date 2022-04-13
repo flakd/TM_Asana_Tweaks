@@ -44,7 +44,6 @@
     logger(2).btm();
   }
 
-
   function setupDynamicUI() {
     logger(2).top();
     //==========================================================
@@ -68,6 +67,274 @@
     logger(2).btm();
   }
 
+
+
+
+  function setAllToolBarsUI(visibility) { //visibility = show, hide, toggle
+
+    selectAndSetProps(uiElsToHide, "visibility", visibility);
+    selectAndSetProps(uiElsToShrink, "height", "35px");
+    
+    function setUIPadding() {
+      //let burgerMenu = document.querySelector(".AsanaPageTopbar--showingBreadcrumbs");
+      console.log("burgerMenu: %s", burgerMenu);
+      burgerMenu.style.paddingBottom = "0px";
+    }
+    function setUITopBarHeight() {
+      //let topBarParent = document.querySelector(".AsanaPageTopbar.AsanaPageTopbar--withoutShadow");
+      //let topBarParent = document.querySelector(".AsanaPageTopbar");
+      //let topBarParent = document.querySelector(".AsanaBaseTopbar");
+      let topBarParent = document.querySelector(".AsanaBaseTopbar.AsanaBaseTopbar--withoutShadow");
+      console.log("topBarParent: %s", topBarParent);
+      topBarParent.style.minHeight = "0px";
+    }
+    function setUITopBarLeftHide() {
+      //	find the MAIN TOP-LEFT MENU/TOOLBAR with "Overview", "List", "Board"
+      //let topBarChild_leftItems = document.querySelector(".TopbarPageHeaderStructure.ProjectPageHeader");
+      let topBarChild_leftItems = document.querySelector(".TopbarPageHeaderStructure");
+      topBarChild_leftItems.style.display = "none";
+    }
+    function setUISectionsGrayOut() {
+      //	find all SECTION HEADINGS
+      let sectionsToFadeOut = document.querySelectorAll(".PotColumnName-nameButton");
+      //	now loop through all SECTION HEADINGS
+      for (let sectIdx = 0; sectIdx < sectionsToFadeOut.length; sectIdx++) {
+        let section = sectionsToFadeOut[sectIdx];
+        //	not turn the TEXT TO GRAY **only if** the TEXT CONTAINS ".." (two successive periods)
+        if (section &&
+          section.innerText &&
+          section.innerText.contains("..")
+        ) {
+          section.style.color = "gray";
+        }
+      }
+    }
+    setUIPadding();
+    setUITopBarHeight();
+    setUITopBarLeftHide();
+    setUISectionsGrayOut();
+    //shrinkDetailsPane();	//NOT DONE, very complicated - not called for now
+  }
+  function selectAndSetProps(selectors, property, value) {
+    function setHeights(height, element) {
+      console.log('inside setHeights()');
+
+      if (!element) { errHelpers.nullError(this, "element missing"); return; }
+      if (!element.style) { console.log("this object has no STYLE property - not HTML?"); return; }
+
+      // OTHERWISE...
+      if (!height) { errHelpers.nullError(this, "height value missing"); return; }
+      if (!height.contains("px")) {
+        console.log("invalid height - must incluse 'px' in string => string supplied was: '%s'", height);
+        return;
+      }
+      element.style.height = height * 2;
+      element.style.paddingTop = "20px";
+    }
+    function setToolBarVis(visibility, toolBar) { //visibility = show, hide, toggle
+      console.log('inside setToolBarVis()');
+
+      if (visibility === undefined) {
+        visibility = "toggle";
+      }
+
+
+      if (toolBar) {
+        console.log("TOOLBAR: '" + toolBar + "' has been found/valid element on the page");
+        if (toolBar.style.display !== 'none') {
+          window.toolBar_style_display = toolBar.style.display;
+        }
+
+
+        if (visibility === "hide" && toolBar.style.display !== 'none') {
+          window.toolBar_style_display = toolBar.style.display;
+          toolBar.style.display = "none";
+          console.log("TOOLBAR... ");
+          console.log(toolBar);
+          console.log("... is hidden");
+        }
+        else if (visibility === "show" && toolBar.style.display === 'none') {
+          toolBar.style.display = window.toolBar_style_display;
+          console.log("TOOLBAR... ");
+          console.log(toolBar);
+          console.log("... is shown");
+        }
+
+        else if (visibility === "toggle") {
+          console.log("TOOLBAR... ");
+          console.log(toolBar);
+          let hideOrShow = "";
+          if (toolBar.style.display !== 'none') {
+            toolBar.style.display = 'none';
+            hideOrShow = "hide";
+          } else {
+            toolBar.style.display = window.toolBar_style_display;
+            hideOrShow = "show";
+          }
+          console.log("... TOGGLED to: '" + hideOrShow + "'");
+        }
+
+      } else {
+        console.log("TOOLBAR... ");
+        console.log(toolBar);
+        console.log("... is NULL, maybe this is running before page loads");
+      }
+      console.log('leaving setToolBarVis()');
+    }    
+    let elements;
+    let element;
+
+    for (let selIdx = 0; selIdx < selectors.length; selIdx++) {
+      elements = document.querySelectorAll(selectors[selIdx]);
+      console.log("\n");
+      if (!elements || !elements.length || elements.length == 0) {
+        errHelpers.nullError(this, "Error:  CSS selector => Found $s instances of CSS selector: '$s'",
+          elements.length, selectors[selIdx]
+        );
+        return;
+      } else {
+        let msg = "OK: Found $s of CSS selector('$s'). Here's a list of elements found:"
+        console.log(msg, elements.length, selectors[selIdx]);
+        console.log("========================================================")
+        for (let tbIdx = 0; tbIdx < elements.length; tbIdx++) {
+          element = elements[tbIdx];
+          if (!property) return errHelpers.nullError(this);
+          if (property === "visibility") setToolBarVis(value, element);
+          if (property === "height") setHeights(value, element);
+          console.log("set PROPERTY: %s, to VALUE: %s  => for the following element:", property, value);
+          console.log(element);
+        }
+      }
+    }
+  }
+
+
+
+  function checkForBullets(bullets, content, numBullets, task) {
+    for (let j = 0; j < bullets.length; j++) { //	FOR "Loop Through Bullets"
+      let bullet = bullets[j][0];
+      let styleName = bullets[j][1];
+      let styleValue = bullets[j][2];
+
+      //we found a(nother) bullet, so add it's styling
+      if (content.includes(bullet)) { // IF "Found Bullet"
+        numBullets = numBullets + 1;
+        //if (bullet=="√") task.classList.add("\\" + bullet);
+        task.classList.add(styleName);
+        logger(41).w(`BULLET '${bullet}' =>`, `${styleName}: ${styleValue}`, "ClassList: ", task.classList);
+
+        task.style[styleName] = styleValue;
+      } //ENDIF "Found Bullet"
+
+    } //ENDFOR "Loop Through Bullets"
+    return numBullets;
+  }
+  function conditionalHighlighting() {
+    logger(2).top();
+
+    const bullets = getHLCodesAsArray();
+
+    let taskListItems = document.querySelectorAll(tasksSelector);
+    let tli = taskListItems;
+
+    // CHECK that we have an ACTUAL LIST of tasks/items
+    // IF we don't then ERROR TO CONSOLE & RETURN from this function
+    if (!tli || !tli[0]) { errHelpers.nullError(this, 37); return; }
+
+    console.log("FOUND an ACTUAL List of %s Tasks by CLASS: '%s'", tli.length, tasksSelector)
+
+    /*******************************************
+      //  THE FOLLOWING DONE FOR EVERY TASK LINE
+      *******************************************/
+    for (let i = 0; i < tli.length; i++) {	// FOR "Loop through all Task Items"
+
+      // DBL-CHECK to see if there an item at this index in the tasklist,
+      // otherwise ERROR TO CONSOLE & BREAK OUT OF ENTIRE loop ?????  -- or just CONTINUE ?????
+      if (!tli[i]) { errHelpers.nullError(this, 41); continue; }
+
+      // SO we must have an item, so set var 'task' to that item
+      let task = tli[i];
+
+      //check that the task has a description/text, otherwise error & continue to next in loop
+      if (!task.innerHTML || !task.textContent) { errHelpers.nullError(this, 42); return; }
+
+      // OK, SO, we must have actual text, so set var 'content' to that text
+      let content = task.textContent;
+      /*****************************************
+        //  NOW that we've isolated/captured our ACTUAL
+        //	Task TEXT, let's examine it more closely
+        ************************************************/
+      let innerTaskDiv = task.querySelector("div");
+      let innerTaskTA = task.querySelector("textarea");
+
+      /******************************************************
+        *    BEFORE we EVEN CHECK for bullets, let's see
+        *    if this is already completed -- if so, we
+        *    are going to set SPECIAL COMPLETED styling
+        ******************************************************/
+
+      if (task.classList.contains(completedTaskClassName)) {	//IF "Completed Task"
+
+        if (isLoggingOn) console.log("BUT This Task is COMPLETED=>'%c', CLASS contains '%s', FULL CLASSLIST='%c'", content, completedTaskClassName, task.classList);
+        //  Task IS COMPLETED, so set special styling REGARDLESS
+        //  of bullets, and CONTINUE(skip) to NEXT Task Item
+        task.style.backgroundColor = completedTaskBgColor;
+        task.style.color = completedTaskTextColor;
+        // STOP, don't set ANY MORE STYLING... a COMPLETED
+        // Task Styling OVERRIDES all others so, JUMP out
+        // of THIS ITERATION to the NEXT TASK in the loop
+        continue;
+      } // ENDIF "Completed Task"
+      
+      
+      innerTaskTA.oninput = function(event){
+        //let's check this task item to see if it has ANY of the bullets -- this will SET the *LAST* BULLET it finds!!!
+        let numBullets = 0;
+
+        numBullets = checkForBullets(bullets, innerTaskTA.value, numBullets, task);//ENDFOR "Loop Through Bullets"
+        console.log("I changed:  numbullets = %s",  numBullets);
+        // NO bullets FOUND, and NOT COMPLETED, so clear all formatting...
+        // BECAUSE we want to catch RECENT CHANGES where bullets were
+        // DELETED/REMOVED by user from the task, otherwise OLD BULLET
+        // formatting will linger
+        if (numBullets == 0) { // IF "We never found bullets" (numBullets COUNTER still ZERO)
+          //task.style.backgroundColor = "";
+          //task.style.color = "";
+          task.style = null;
+        }//ENDIF "We never found bullets"
+      }
+
+      let taskText = innerTaskDiv.innerHTML;
+
+      //let's check this task item to see if it has ANY of the bullets -- this will SET the *LAST* BULLET it finds!!!
+      let numBullets = 0;
+
+      numBullets = checkForBullets(bullets, content, numBullets, task);//ENDFOR "Loop Through Bullets"
+
+      // NO bullets FOUND, and NOT COMPLETED, so clear all formatting...
+      // BECAUSE we want to catch RECENT CHANGES where bullets were
+      // DELETED/REMOVED by user from the task, otherwise OLD BULLET
+      // formatting will linger
+      if (numBullets == 0) { // IF "We never found bullets" (numBullets COUNTER still ZERO)
+        //task.style.backgroundColor = "";
+        //task.style.color = "";
+        task.style = null;
+      }//ENDIF "We never found bullets"
+
+
+      /*******************************************************
+        // IF we've gotten THIS FAR, then we have
+        // a VALID TASK, that is NOT COMPLETED
+        *******************************************************/
+      logger(3).w(`TASK: `, `${ i }`, `  CONTENT: `, `${ taskText }`);
+
+
+
+    }// ENDFOR "Loop through all Task Items"
+
+    logger(2).btm();
+  }
+
   let permUIChanges = {
     hideUpgradeBtn: function hideUpgradeBtn() {
       let upgradeBtn = document.querySelector('[class*="UpgradeButton"]');
@@ -81,7 +348,7 @@
       document.onkeydown = checkFor_Ctrl_Slash;
 
       function checkFor_Ctrl_Slash(evt) {
-        eHandlers.checkForShortcut(evt, 191, openHelpOnKeyPress); // params{evt, "slash" key/char}
+        evtHandlers.checkForShortcut(evt, 191, openHelpOnKeyPress); // params{evt, "slash" key/char}
       }
 
       function openHelpOnKeyPress() {
@@ -122,7 +389,7 @@
       if (!appendToElement) {	// if this is NULL & therefore false, then we didn't find the `addElsToThisBarSelector`
         // this likely means that ASANA has changed the classname since we last ran this.
         //TopbarPageHeaderStructure ProjectPageHeader
-        helpers.nullError(this, "missing '" + addElsToThisBarSelector + "' -- check HTML for this classname");
+        errHelpers.nullError(this, "missing '" + addElsToThisBarSelector + "' -- check HTML for this classname");
       }
       return appendToElement;
     },
@@ -136,7 +403,7 @@
       btn.style.padding = "0px 0px 0px 0px";
       //btn.classList.add('TopbarContingentUpgradeButton-button');
       if (!addToElement) {
-        helpers.nullError(this, "missing 'addToElement");
+        errHelpers.nullError(this, "missing 'addToElement");
         return;
       }
 
@@ -177,7 +444,7 @@
 
       // set to HIDE to start, since bars are visible when page loads initially
       window.ToolBarToggleButton.innerText = "Toggle TBars";
-      window.ToolBarToggleButton.addEventListener('click', eHandlers.toggleAllToolBars);
+      window.ToolBarToggleButton.addEventListener('click', evtHandlers.toggleAllToolBars);
       if (isLoggingOn) console.log('btnToolBarToggle click event set to eHandlers.toggleAllToolBars()');
     },
     createToolBarBtn_HideBars: function createToolBarBtn_HideBars(addToElement) {
@@ -204,261 +471,11 @@
 
       // set to HIDE to start, since bars are visible when page loads initially
       window.toolBarHideButton.innerText = "Hide TBars";
-      window.toolBarHideButton.addEventListener('click', eHandlers.hideAllToolBars);
+      window.toolBarHideButton.addEventListener('click', evtHandlers.hideAllToolBars);
       if (isLoggingOn) console.log('btnToolBarHide click event set to eHandlers.hideAllToolBars()');
     }
   };
-
-
-  function setUIPadding() {
-    //let burgerMenu = document.querySelector(".AsanaPageTopbar--showingBreadcrumbs");
-    console.log("burgerMenu: %s", burgerMenu);
-    burgerMenu.style.paddingBottom = "0px";
-  }
-  function setUITopBarHeight() {
-    //let topBarParent = document.querySelector(".AsanaPageTopbar.AsanaPageTopbar--withoutShadow");
-    //let topBarParent = document.querySelector(".AsanaPageTopbar");
-    //let topBarParent = document.querySelector(".AsanaBaseTopbar");
-    let topBarParent = document.querySelector(".AsanaBaseTopbar.AsanaBaseTopbar--withoutShadow");
-    console.log("topBarParent: %s", topBarParent);
-    topBarParent.style.minHeight = "0px";
-  }
-  function setUITopBarLeftHide() {
-    //	find the MAIN TOP-LEFT MENU/TOOLBAR with "Overview", "List", "Board"
-    //let topBarChild_leftItems = document.querySelector(".TopbarPageHeaderStructure.ProjectPageHeader");
-    let topBarChild_leftItems = document.querySelector(".TopbarPageHeaderStructure");
-    topBarChild_leftItems.style.display = "none";
-  }
-  function setUISectionsGrayOut() {
-    //	find all SECTION HEADINGS
-    let sectionsToFadeOut = document.querySelectorAll(".PotColumnName-nameButton");
-    //	now loop through all SECTION HEADINGS
-    for (let sectIdx = 0; sectIdx < sectionsToFadeOut.length; sectIdx++) {
-      let section = sectionsToFadeOut[sectIdx];
-      //	not turn the TEXT TO GRAY **only if** the TEXT CONTAINS ".." (two successive periods)
-      if (section &&
-        section.innerText &&
-        section.innerText.contains("..")
-      ) {
-        section.style.color = "gray";
-      }
-    }
-  }
-
-
-  function setHeights(height, element) {
-    console.log('inside setHeights()');
-
-    if (!element) { helpers.nullError(this, "element missing"); return; }
-    if (!element.style) { console.log("this object has no STYLE property - not HTML?"); return; }
-
-    // OTHERWISE...
-    if (!height) { helpers.nullError(this, "height value missing"); return; }
-    if (!height.contains("px")) {
-      console.log("invalid height - must incluse 'px' in string => string supplied was: '%s'", height);
-      return;
-    }
-    element.style.height = height * 2;
-    element.style.paddingTop = "20px";
-  }
-  function setAllToolBarsUI(visibility) { //visibility = show, hide, toggle
-
-    selectAndSetProps(uiElsToHide, "visibility", visibility);
-
-
-    selectAndSetProps(uiElsToShrink, "height", "35px");
-
-    setUIPadding();
-    setUITopBarHeight();
-    setUITopBarLeftHide();
-    setUISectionsGrayOut();
-    //shrinkDetailsPane();	//NOT DONE, very complicated - not called for now
-  }
-  function selectAndSetProps(selectors, property, value) {
-    let elements;
-    let element;
-
-    for (let selIdx = 0; selIdx < selectors.length; selIdx++) {
-      elements = document.querySelectorAll(selectors[selIdx]);
-      console.log("\n");
-      if (!elements || !elements.length || elements.length == 0) {
-        helpers.nullError(this, "Error:  CSS selector => Found $s instances of CSS selector: '$s'",
-          elements.length, selectors[selIdx]
-        );
-        return;
-      } else {
-        let msg = "OK: Found $s of CSS selector('$s'). Here's a list of elements found:"
-        console.log(msg, elements.length, selectors[selIdx]);
-        console.log("========================================================")
-        for (let tbIdx = 0; tbIdx < elements.length; tbIdx++) {
-          element = elements[tbIdx];
-          if (!property) return helpers.nullError(this);
-          if (property === "visibility") setToolBarVis(value, element);
-          if (property === "height") setHeights(value, element);
-          console.log("set PROPERTY: %s, to VALUE: %s  => for the following element:", property, value);
-          console.log(element);
-        }
-      }
-    }
-  }
-  function setToolBarVis(visibility, toolBar) { //visibility = show, hide, toggle
-    console.log('inside setToolBarVis()');
-
-    if (visibility === undefined) {
-      visibility = "toggle";
-    }
-
-
-    if (toolBar) {
-      console.log("TOOLBAR: '" + toolBar + "' has been found/valid element on the page");
-      if (toolBar.style.display !== 'none') {
-        window.toolBar_style_display = toolBar.style.display;
-      }
-
-
-      if (visibility === "hide" && toolBar.style.display !== 'none') {
-        window.toolBar_style_display = toolBar.style.display;
-        toolBar.style.display = "none";
-        console.log("TOOLBAR... ");
-        console.log(toolBar);
-        console.log("... is hidden");
-      }
-      else if (visibility === "show" && toolBar.style.display === 'none') {
-        toolBar.style.display = window.toolBar_style_display;
-        console.log("TOOLBAR... ");
-        console.log(toolBar);
-        console.log("... is shown");
-      }
-
-      else if (visibility === "toggle") {
-        console.log("TOOLBAR... ");
-        console.log(toolBar);
-        let hideOrShow = "";
-        if (toolBar.style.display !== 'none') {
-          toolBar.style.display = 'none';
-          hideOrShow = "hide";
-        } else {
-          toolBar.style.display = window.toolBar_style_display;
-          hideOrShow = "show";
-        }
-        console.log("... TOGGLED to: '" + hideOrShow + "'");
-      }
-
-    } else {
-      console.log("TOOLBAR... ");
-      console.log(toolBar);
-      console.log("... is NULL, maybe this is running before page loads");
-    }
-    console.log('leaving setToolBarVis()');
-  }
-
-
-  function conditionalHighlighting() {
-    logger(2).top();
-
-    const bullets = getHLCodesAsArray();
-
-    let taskListItems = document.querySelectorAll(tasksSelector);
-    let tli = taskListItems;
-
-    // CHECK that we have an ACTUAL LIST of tasks/items
-    // IF we don't then ERROR TO CONSOLE & RETURN from this function
-    if (!tli || !tli[0]) { helpers.nullError(this, 37); return; }
-
-    console.log("FOUND an ACTUAL List of %s Tasks by CLASS: '%s'", tli.length, tasksSelector)
-
-    /*******************************************
-      //  THE FOLLOWING DONE FOR EVERY TASK LINE
-      *******************************************/
-    for (let i = 0; i < tli.length; i++) {	// FOR "Loop through all Task Items"
-
-      // DBL-CHECK to see if there an item at this index in the tasklist,
-      // otherwise ERROR TO CONSOLE & BREAK OUT OF ENTIRE loop ?????  -- or just CONTINUE ?????
-      if (!tli[i]) { helpers.nullError(this, 41); continue; }
-
-      // SO we must have an item, so set var 'task' to that item
-      let task = tli[i];
-
-      //check that the task has a description/text, otherwise error & continue to next in loop
-      if (!task.innerHTML || !task.textContent) { helpers.nullError(this, 42); return; }
-
-      // OK, SO, we must have actual text, so set var 'content' to that text
-      let content = task.textContent;
-      /*****************************************
-        //  NOW that we've isolated/captured our ACTUAL
-        //	Task TEXT, let's examine it more closely
-        ************************************************/
-      let innerTaskDiv = task.querySelector("div");
-      let innerTaskTA = task.querySelector("textarea");
-      innerTaskTA.onchange = function(){
-        console.log("changed from: %s to %s", innerTaskTA, innerTaskTA);
-      }
-      let taskText = innerTaskDiv.innerHTML;
-
-      /******************************************************
-        *    BEFORE we EVEN CHECK for bullets, let's see
-        *    if this is already completed -- if so, we
-        *    are going to set SPECIAL COMPLETED styling
-        ******************************************************/
-
-      if (task.classList.contains(completedTaskClassName)) {	//IF "Completed Task"
-
-        if (isLoggingOn) console.log("BUT This Task is COMPLETED=>'%c', CLASS contains '%s', FULL CLASSLIST='%c'", content, completedTaskClassName, task.classList);
-        //  Task IS COMPLETED, so set special styling REGARDLESS
-        //  of bullets, and CONTINUE(skip) to NEXT Task Item
-        task.style.backgroundColor = completedTaskBgColor;
-        task.style.color = completedTaskTextColor;
-        // STOP, don't set ANY MORE STYLING... a COMPLETED
-        // Task Styling OVERRIDES all others so, JUMP out
-        // of THIS ITERATION to the NEXT TASK in the loop
-        continue;
-      } // ENDIF "Completed Task"
-
-
-      /*******************************************************
-        // IF we've gotten THIS FAR, then we have
-        // a VALID TASK, that is NOT COMPLETED
-        *******************************************************/
-      logger(3).w(`TASK: `, `${ i }`, `  CONTENT: `, `${ taskText }`);
-
-      //let's check this task item to see if it has ANY of the bullets -- this will SET the *LAST* BULLET it finds!!!
-      let numBullets = 0;
-
-      for (let j = 0; j < bullets.length; j++) {	//	FOR "Loop Through Bullets"
-        let bullet = bullets[j][0];
-        let styleName = bullets[j][1];
-        let styleValue = bullets[j][2];
-
-        //we found a(nother) bullet, so add it's styling
-        if (content.includes(bullet)) {	// IF "Found Bullet"
-          numBullets = numBullets + 1;
-          //if (bullet=="√") task.classList.add("\\" + bullet);
-          task.classList.add(styleName);
-          logger(41).w(`BULLET '${bullet}' =>`, `${styleName}: ${styleValue}`,"ClassList: ", task.classList);
-
-          task.style[styleName] = styleValue;
-        }	//ENDIF "Found Bullet"
-
-      }//ENDFOR "Loop Through Bullets"
-
-      // NO bullets FOUND, and NOT COMPLETED, so clear all formatting...
-      // BECAUSE we want to catch RECENT CHANGES where bullets were
-      // DELETED/REMOVED by user from the task, otherwise OLD BULLET
-      // formatting will linger
-      if (numBullets == 0) { // IF "We never found bullets" (numBullets COUNTER still ZERO)
-        //task.style.backgroundColor = "";
-        //task.style.color = "";
-        task.style = null;
-      }//ENDIF "We never found bullets"
-
-    }// ENDFOR "Loop through all Task Items"
-
-    logger(2).btm();
-  }
-
-
-  //  BEGIN: "EVENT HANDLERS" ==========================
-  let eHandlers = {
+  let evtHandlers = {
     //	Button Click Handlers
     toggleAllToolBars: function toggleAllToolBars() {
       setAllToolBarsUI("toggle");
@@ -491,9 +508,7 @@
       }//	if (evt.keyCode == 191 && evt.ctrlKey) {
     }
   }
-
-  // BEGIN: "Error / Troubleshooting helpers" ============
-  let helpers = {
+  let errHelpers = {
     getFuncName: function getFuncName() {
       return getFuncName.caller.name
       /*    function getFuncName(func){
@@ -518,10 +533,37 @@
       }
       if (isLoggingOn) console.log('---------------');
       //        if (isLoggingOn) console.log(getCallerName(caller));
-      if (isLoggingOn) console.log(helpers.nullError.caller.name);
+      if (isLoggingOn) console.log(errHelpers.nullError.caller.name);
       if (isLoggingOn) console.log('===============');
     }
   };
+  let bgWorkers = {
+    /*   background aSync functions: wait for entire page to load, etc.
+    ********************************************************************/
+    getUrlParams: function getUrlParams(url) {
+      let params = {};
+      url.replace(/[?&]+([^=&]+)=([^&]*)/gi, function (m, key, value) {
+        params[key] = value;
+      });
+
+      return params;
+    }, //getUrlParams
+
+    //the following is not currently being used
+    waitForElementToDisplay: function waitForElementToDisplay(selector, ms) {
+      if (document.querySelector(selector) != null) {
+        runYourInitHere();
+      }
+      else {
+        setTimeout(function () {
+          waitForElementToDisplay(selector, ms);
+        }, ms);
+      }
+    } //END waitForElementToDisplay
+  }
+
+
+
 
   // BEGIN: "Not FULLY Implemented or UNUSED Functions" ================
   function notImplementedFunctions() {
@@ -594,31 +636,5 @@
         throw e;
       }
     }
-  }
-
-  //BEGIN: "background workers" ========================
-  let bgWorkers = {
-    /*   background aSync functions: wait for entire page to load, etc.
-    ********************************************************************/
-    getUrlParams: function getUrlParams(url) {
-      let params = {};
-      url.replace(/[?&]+([^=&]+)=([^&]*)/gi, function (m, key, value) {
-        params[key] = value;
-      });
-
-      return params;
-    }, //getUrlParams
-
-    //the following is not currently being used
-    waitForElementToDisplay: function waitForElementToDisplay(selector, ms) {
-      if (document.querySelector(selector) != null) {
-        runYourInitHere();
-      }
-      else {
-        setTimeout(function () {
-          waitForElementToDisplay(selector, ms);
-        }, ms);
-      }
-    } //END waitForElementToDisplay
-  }
+  }// END: "Not FULLY Implemented or UNUSED Functions" ================
 //}

@@ -44,3 +44,15 @@ div.HStyle12, textarea.HStyle12 {/*  √  */
   background-color: purple;
   color: white;
 }
+table#tblStyleHelp td{
+  border-spacing:10px;
+  background-color:brown;
+}
+#tblStyleHelp td{
+  border-spacing:10px;
+  background-color:brown;
+}
+#tblStyleHelp td{
+  border-spacing:10px;
+  background-color:brown;
+}

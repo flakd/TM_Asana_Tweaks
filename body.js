@@ -345,32 +345,43 @@
     },
     setStyleHelp: function setup_HelpCheatSheet() {
       //document.onkeydown = detectKeyPress_CTRL_KEY(191); // FORWARD SLASH key
-      document.onkeydown = checkFor_Ctrl_Slash;
 
-      function checkFor_Ctrl_Slash(evt) {
-        evtHandlers.checkForShortcut(evt, 191, openHelpOnKeyPress); // params{evt, "slash" key/char}
-      }
-
-      function openHelpOnKeyPress() {
+      function openHelp() {
         let w = window.open('', "", "width=600, height=400, scrollbars=no");
-        w.document.body.innerHTML = getStyleHelpHTML();
+        w.document.body.innerHTML = getHTML();
       }
 
-      function getStyleHelpHTML() {
+      function getHTML() {
         const helpCellTextArray = getHLCodesAsArray();
 
         let helpRowArray = [];
         let helpRowInnerHTML, helpRowHTML, helpTableHTML;
         for (let i = 0; i < helpCellTextArray.length; i++) {
-          helpRowInnerHTML = "<TD>" + helpCellTextArray[i].join("</TD><TD>") + "</TD>";
+          helpRowInnerHTML = "    <TD class='helpTblCell'>" + helpCellTextArray[i].join("</TD><TD>") + "</TD>\n";
           helpRowArray[i] = helpRowInnerHTML;
         }
-        helpRowHTML = "<TR>" + helpRowArray.join("</TR><TR>") + "</TR>";
-        helpTableHTML = "<TABLE font-size='10pt' style='border: 1px' cellpadding='1'>\n"
+        helpRowHTML = "  <TR class='helpTblRow'>\n" + helpRowArray.join("  </TR>\n  <TR>\n") + "  </TR>\n";
+/*
+        helpTableHTML = "<TABLE \n"; 
+        helpTableHTML += "style='\n";
+        helpTableHTML += "font-size:10pt; border:1px; \n";
+        helpTableHTML += "padding:2px; spacing:2px; \n";
+        helpTableHTML += "background-color:beige; \n"; 
+*/
+        console.log(myTableOpenTag);
+        console.log(helpRowHTML);
+        helpTableHTML = myTableOpenTag;
         helpTableHTML += helpRowHTML;
-        helpTableHTML += "\n</TABLE>";
+        helpTableHTML += "</TABLE>";
+        console.log(helpTableHTML);
         return helpTableHTML;
       }
+      let openHelpOnKeyPress = openHelp;
+      let getStyleHelpHTML = getHTML;
+      return ({
+        openHelpOnKeyPress,
+        getHTML
+      })
 
     },//END FUNCTION setUpHelpCheatSheet
     setUIPanesWidths: function setUIPanesWidths() {
@@ -483,7 +494,6 @@
     hideAllToolBars: function hideAllToolBars() {
       setAllToolBarsUI("hide");
     },
-
     //	"KeyPress Handlers"
     checkForShortcut: function checkForShortcut(evt, keyCode, callbackFn) {
       evt = evt || window.event;

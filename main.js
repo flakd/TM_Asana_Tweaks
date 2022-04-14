@@ -1,8 +1,17 @@
 const logger = window.logger
+
+const settingsText = GM_getResourceText("IMPORTED_settings");
+console.log(settings);
+
+var settings = JSON.parse(settingsText);
+console.log(settings.helpWinSettings)
+
+
 const myTableOpenTag = GM_getResourceText("IMPORTED_HTML1");
 console.log(myTableOpenTag);
-const my_css = GM_getResourceText("IMPORTED_CSS");
-GM_addStyle(my_css);
+
+const my_css1 = GM_getResourceText("IMPORTED_CSS1");
+GM_addStyle(my_css1);
 console.log("TM script self-exec Scope: const logger = window.logger");
 
 logger(2, "GLOBAL function").top();

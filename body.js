@@ -347,20 +347,41 @@
       //document.onkeydown = detectKeyPress_CTRL_KEY(191); // FORWARD SLASH key
 
       function openHelp() {
-        let w = window.open('', "", "width=600, height=400, scrollbars=no");
+        let w = window.open("", "HelpWindow", settings.styleHelp.winSettings);
         w.document.body.innerHTML = getHTML();
+        const my_css2 = GM_getResourceText("IMPORTED_CSS2");
+        var styleSheet = w.document.createElement("style")
+        styleSheet.innerText = my_css2
+        w.document.head.appendChild(styleSheet)        
+
       }
 
       function getHTML() {
         const helpCellTextArray = getHLCodesAsArray();
 
         let helpRowArray = [];
+        let cellNum = helpCellTextArray.length;
+        let cellNumFirstCol = Math.ceil(cellNum/ 2);
         let helpRowInnerHTML, helpRowHTML, helpTableHTML;
-        for (let i = 0; i < helpCellTextArray.length; i++) {
-          helpRowInnerHTML = "    <TD class='helpTblCell'>" + helpCellTextArray[i].join("</TD><TD>") + "</TD>\n";
+        for (let i = 0; i < cellNumFirstCol; i++) {
+          let col1CellIdx = i;
+          let col2CellIdx = i + cellNumFirstCol;
+          helpRowInnerHTML =  "    <TD class='helpTblCell'>";
+          helpRowInnerHTML += helpCellTextArray[col1CellIdx].join("</TD><TD>");
+          helpRowInnerHTML += "</TD>\n";
+          helpRowInnerHTML += "    <TD class='helpTblCellSpacer'>";
+          helpRowInnerHTML += "      <div id='colSpacer'></div>";
+          helpRowInnerHTML += "</TD>\n";
+          if (helpCellTextArray[col2CellIdx]){
+            helpRowInnerHTML += "    <TD class='helpTblCell'>";
+            helpRowInnerHTML += helpCellTextArray[col2CellIdx].join("</TD><TD>");
+            helpRowInnerHTML += "</TD>";
+          }
+          helpRowInnerHTML += "\n";
           helpRowArray[i] = helpRowInnerHTML;
         }
-        helpRowHTML = "  <TR class='helpTblRow'>\n" + helpRowArray.join("  </TR>\n  <TR>\n") + "  </TR>\n";
+        helpRowHTML =   "  <TR class='helpTblRow'>\n";
+        helpRowHTML +=  helpRowArray.join("  </TR>\n  <TR>\n") + "  </TR>\n";
 /*
         helpTableHTML = "<TABLE \n"; 
         helpTableHTML += "style='\n";

@@ -1,17 +1,15 @@
-#tblStyleHelp td{
+.helpTblCell {
   padding:10px;
   background-color:beige;
 }
 .helpTbl {
-  background-color:white;
+  background-color:lightgrey;
   border-spacing:4px;
   font-family:monospace;
   font-size:10pt; 
 }
 .helpTblCellSpacer{
-  background-color:none;
-}
-#colSpacer {
+  background-color:lightgray;
   width: 50px;
 }
   

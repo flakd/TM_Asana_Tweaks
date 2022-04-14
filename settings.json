@@ -1,10 +1,5 @@
 {
   "styleHelp": {
-    "winSettings": "width=800, height=600, toolbar=no, scrollbars=no",
-    "table":  {
-      "midColSpacing": {
-        "style": "width: 40px"
-      }
-    }
+    "winSettings": "width=800, height=700, toolbar=no, scrollbars=no"
   }
 }

@@ -367,28 +367,22 @@
           let col1CellIdx = i;
           let col2CellIdx = i + cellNumFirstCol;
           helpRowInnerHTML =  "    <TD class='helpTblCell'>";
-          helpRowInnerHTML += helpCellTextArray[col1CellIdx].join("</TD><TD>");
+          helpRowInnerHTML += helpCellTextArray[col1CellIdx].join("</TD><TD class='helpTblCell'>");
           helpRowInnerHTML += "</TD>\n";
-          helpRowInnerHTML += "    <TD class='helpTblCellSpacer'>";
-          helpRowInnerHTML += "      <div id='colSpacer'></div>";
-          helpRowInnerHTML += "</TD>\n";
+          helpRowInnerHTML += "    <TD class='helpTblCellSpacer'>\n";
+          helpRowInnerHTML += "      <div id='colSpacer'></div>\n";
+          helpRowInnerHTML += "    </TD>\n";
           if (helpCellTextArray[col2CellIdx]){
             helpRowInnerHTML += "    <TD class='helpTblCell'>";
-            helpRowInnerHTML += helpCellTextArray[col2CellIdx].join("</TD><TD>");
+            helpRowInnerHTML += helpCellTextArray[col2CellIdx].join("</TD><TD class='helpTblCell'>");
             helpRowInnerHTML += "</TD>";
           }
           helpRowInnerHTML += "\n";
           helpRowArray[i] = helpRowInnerHTML;
         }
         helpRowHTML =   "  <TR class='helpTblRow'>\n";
-        helpRowHTML +=  helpRowArray.join("  </TR>\n  <TR>\n") + "  </TR>\n";
-/*
-        helpTableHTML = "<TABLE \n"; 
-        helpTableHTML += "style='\n";
-        helpTableHTML += "font-size:10pt; border:1px; \n";
-        helpTableHTML += "padding:2px; spacing:2px; \n";
-        helpTableHTML += "background-color:beige; \n"; 
-*/
+        helpRowHTML += helpRowArray.join("  </TR>\n  <TR class='helpTblRow'>\n") + "  </TR>\n";
+
         console.log(myTableOpenTag);
         console.log(helpRowHTML);
         helpTableHTML = myTableOpenTag;

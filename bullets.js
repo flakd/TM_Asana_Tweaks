@@ -11,33 +11,108 @@ function getHLCodesAsArray() {
     [ "|2", 
       [
         ["background-color", "yellow"],
-        ["|2", "color", "black"]
+        ["color", "black"]
       ]
     ],
 
-    ["|3"
+    [ "|3", 
       [
         ["background-color", "DeepPink"],
         ["color", "white"]
+      ]
+    ],
+
+    [ "|4", 
+      [
+        ["background-color", "red"]
+      ]
+    ],
+
+    [ "|5",
+      [
+        ["background-color", "orange"]
+      ]
+    ],
+
+    [ "|6", 
+      [
+        ["background-color", "purple"]
+      ]
+    ],
+
+    [ "|7", 
+      [
+        ["background-color", "blue"],
+        ["color", "white"]
+      ]
+    ],
+
+    [ "|8", 
+      [
+        ["background-color", "beige"],
+        ["color", "black"]
+      ]
+    ],
+
+    [ "|9", 
+      [
+        ["background-color", "white"],
+        ["color", "black"]
+      ]
+    ],
+
+    [ "FUP", 
+      [
+        ["background-color", "turquoise"]
+      ]
+    ],
+
+    [ "<>", 
+      [
+        ["background-color", "brown"],
+        ["color", "yellow"]
+      ]
+    ],
+
+    [ "√", 
+      [
+        ["background-color", "purple"],
+        ["color", "white"]
+      ]
+    ],
+
+    [ "√√", 
+      [
+        ["background-color", "#AAAAAA"],
+        ["text-decoration", "underline"],
+        ["color", "black"]
+      ]
+    ],
+
+    [ "~~", 
+      [
+        ["font-style", "italic"],
+        ["font-weight", "900"],
+        ["text-shadow", "2px 2px #FF0000"]
+      ]
+    ],
+
+    [ "[]", 
+      [
+        ["font-variant", "small-caps"]
+      ]
+    ],
+
+    [ "{}", 
+      [
+        ["font-weight", "900"],
+        ["text-decoration", "overline"],
       ]
     ]
 
   ];
   return bullets;
 }
-/*
-  const bullets = [
-
-    [ 
-      ["|1"], 
-      ["backgroundColor", "white"]
-    ],
-    [ 
-      ["|1"], 
-      ["color", "black"],
-    ]
-  ];
-*/
 /*
     ["|1", "HStyle01"],
     ["|2", "HStyle02"],

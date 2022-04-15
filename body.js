@@ -211,21 +211,30 @@
 
 
 
-  function checkForBullets(bullets, content, numBullets, task) {
-    for (let j = 0; j < bullets.length; j++) { //	FOR "Loop Through Bullets"
-      let bullet = bullets[j][0];
-      let styleName = bullets[j][1];
-      let styleValue = bullets[j][2];
+  function checkForBullets(bullets, content, oldNumBullets, task) {
+    const HLArray = bullets;
 
-      //we found a(nother) bullet, so add it's styling
-      if (content.includes(bullet)) { // IF "Found Bullet"
-        numBullets = numBullets + 1;
-        //if (bullet=="√") task.classList.add("\\" + bullet);
-        task.classList.add(styleName);
-        logger(41).w(`BULLET '${bullet}' =>`, `${styleName}: ${styleValue}`, "ClassList: ", task.classList);
+    let helpRowArray = [];
+    let numBullets = HLArray.length;
+    let helpRowInnerHTML, helpRowHTML, helpTableHTML;
+    for (let bIdx = 0; bIdx < numBullets; bIdx++) {
+      let bullet = HLArray[bIdx][0];
+      let styles = HLArray[bIdx][1];
+      for (let sIdx = 0; sIdx < styles.length; sIdx++) {
+        let style = styles[sIdx];
+        let styleName = style[0];
+        let styleValue = style[1];
 
-        task.style[styleName] = styleValue;
-      } //ENDIF "Found Bullet"
+        //we found a(nother) bullet, so add it's styling
+        if (content.includes(bullet)) { // IF "Found Bullet"
+          oldNumBullets = oldNumBullets + 1;
+          //if (bullet=="√") task.classList.add("\\" + bullet);
+          //task.classList.add(styleName);
+          logger(41).w(`BULLET '${bullet}' =>`, `${styleName}: ${styleValue}`, "ClassList: ", task.classList);
+
+          task.style[styleName] = styleValue;
+        } //ENDIF "Found Bullet"
+      }
 
     } //ENDFOR "Loop Through Bullets"
     return numBullets;
@@ -401,10 +410,10 @@
     menuDiv.style.display = "none";
     menuDiv.style.zIndex = "99999";
     menuDiv.style.width = "1200px";
-    menuDiv.style.height = "1000px";
+    menuDiv.style.height = "1300px";
     menuDiv.style.position = "fixed";
     menuDiv.style.top = "0px";
-    menuDiv.style.right = "-500px";
+    menuDiv.style.right = "-900px";
     menuDiv.innerHTML = getHTML();
     var styleSheet = document.createElement("style");
     styleSheet.innerText = my_css2;
@@ -412,39 +421,49 @@
     window.menuDiv = menuDiv;
   }
   function getHTML() {
-    const helpCellTextArray = getHLCodesAsArray();
+    const HLArray = getHLCodesAsArray();
 
     let helpRowArray = [];
-    let cellNum = helpCellTextArray.length;
-    let cellNumFirstCol = Math.ceil(cellNum / 2);
+    let numBullets = HLArray.length;
+    //let cellNumFirstCol = Math.ceil(numBullets / 2);
     let helpRowInnerHTML, helpRowHTML, helpTableHTML;
-    for (let i = 1; i < cellNumFirstCol; i++) {
-      let col1CellIdx = i;
-      let col2CellIdx = i + cellNumFirstCol;
-      bullet = helpCellTextArray[col1CellIdx][0]
-      styleName = helpCellTextArray[col1CellIdx][1];
-      styleValue = helpCellTextArray[col1CellIdx][2]
-      helpRowInnerHTML = `    <TD class='helpTblCell' style='${styleName}:${styleValue};'>`;
-      //helpRowInnerHTML += helpCellTextArray[col1CellIdx].join("</TD><TD class='helpTblCell'>");
-      helpRowInnerHTML += bullet;
-      helpRowInnerHTML += "</TD>";
-      helpRowInnerHTML += `<TD class='helpTblCell' style='${styleName}:${styleValue};'>`;
-      helpRowInnerHTML += styleName;
-      helpRowInnerHTML += "</TD>";
-      helpRowInnerHTML += `<TD class='helpTblCell' style='${styleName}:${styleValue};'>`;
-      helpRowInnerHTML += styleValue;
-      helpRowInnerHTML += "</TD>";
-      helpRowInnerHTML += "\n";
-      helpRowInnerHTML += "    <TD class='helpTblCellSpacer'>\n";
-      helpRowInnerHTML += "      <div id='colSpacer'></div>\n";
-      helpRowInnerHTML += "    </TD>\n";
-      if (helpCellTextArray[col2CellIdx]) {
-        helpRowInnerHTML += "    <TD class='helpTblCell'>";
-        helpRowInnerHTML += helpCellTextArray[col2CellIdx].join("</TD><TD class='helpTblCell'>");
-        helpRowInnerHTML += "</TD>";
-      }
-      helpRowInnerHTML += "\n";
-      helpRowArray[i] = helpRowInnerHTML;
+    //for (let i = 0; i < cellNumFirstCol; i++) {
+      for (let bIdx = 0; bIdx < numBullets; bIdx++) {
+        let bullet = HLArray[bIdx][0];
+        let styles = HLArray[bIdx][1];
+        helpRowInnerHTML = `    <TD class='helpTblCell' \n`;
+        helpRowInnerHTML += `        style='\n`;        
+        for (let sIdx= 0; sIdx < styles.length; sIdx++) {
+          let style = styles[sIdx];
+          let styleName = style[0];
+          let styleValue = style[1];
+          helpRowInnerHTML += `         ${styleName}:${styleValue};\n`; 
+        }
+        helpRowInnerHTML += `         '\n`;
+        helpRowInnerHTML += `    >\n`;
+        helpRowInnerHTML += `      ${bullet}`;
+        helpRowInnerHTML += `\n`;
+        helpRowInnerHTML += `    </TD>\n`;
+
+        helpRowInnerHTML += `    <TD class='helpTblCell' \n`;
+        helpRowInnerHTML += `        style='\n`;                
+        for (let sIdx = 0; sIdx < styles.length; sIdx++) {
+          let style = styles[sIdx];
+          let styleName = style[0];
+          let styleValue = style[1];
+          helpRowInnerHTML += `         ${styleName}:${styleValue};\n`; 
+        }
+        helpRowInnerHTML += `         '\n`;
+        helpRowInnerHTML += `    >\n`;
+        for (let sIdx = 0; sIdx < styles.length; sIdx++) {
+          let style = styles[sIdx];
+          let styleName = style[0];
+          let styleValue = style[1];
+          helpRowInnerHTML += `      ${ styleName }:${ styleValue }; </br>\n`; 
+        }
+        helpRowInnerHTML += "    </TD>\n";
+        
+      helpRowArray[bIdx] = helpRowInnerHTML;
     }
     helpRowHTML = "  <TR class='helpTblRow'>\n";
     helpRowHTML += helpRowArray.join("  </TR>\n  <TR class='helpTblRow'>\n") + "  </TR>\n";

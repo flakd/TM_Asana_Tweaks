@@ -22,9 +22,21 @@ window.highlightButton;
 window.toggleBarsButton;
 window.hideBarsButton;
 
+
 function checkFor_Ctrl_Slash(evt) {
-  let evtHandler = permUIChanges.setStyleHelp().openHelpOnKeyPress;
-  evtHandlers.checkForShortcut(evt, 191, evtHandler); // params{evt, "slash" key/char}
+  logger(3).inside();
+  //let openHelp = permUIChanges.setStyleHelp().openHelpOnKeyPress;
+  evtHandlers.checkForShortcut(evt, 191, function(){
+    if (window.menuDiv) {
+      if (window.menuDiv.style) {
+        if (window.menuDiv.style.display == "none") {
+          window.menuDiv.style.display = "block";
+        } else {
+          window.menuDiv.style.display = "none";
+        }
+      }
+    }
+  }); // params{evt, "slash" key/char}
 }
 function checkFor_Ctrl_H(evt){
   logger(3).inside();

@@ -13,6 +13,7 @@
 
     logger(2).next("setupDynamicUI()");
     setupDynamicUI();
+    setupMenuDiv();
 
     addEditorListeners();
 
@@ -347,50 +348,33 @@
       //document.onkeydown = detectKeyPress_CTRL_KEY(191); // FORWARD SLASH key
 
       function openHelp() {
-        let w = window.open("", "HelpWindow", settings.styleHelp.winSettings);
-        w.document.body.innerHTML = getHTML();
-        const my_css2 = GM_getResourceText("IMPORTED_CSS2");
-        var styleSheet = w.document.createElement("style")
-        styleSheet.innerText = my_css2
-        w.document.head.appendChild(styleSheet)        
+        let activeElement = document.activeElement;
+        let mainWin = window;
+        window.name = "mainWin";
 
-      }
-
-      function getHTML() {
-        const helpCellTextArray = getHLCodesAsArray();
-
-        let helpRowArray = [];
-        let cellNum = helpCellTextArray.length;
-        let cellNumFirstCol = Math.ceil(cellNum/ 2);
-        let helpRowInnerHTML, helpRowHTML, helpTableHTML;
-        for (let i = 0; i < cellNumFirstCol; i++) {
-          let col1CellIdx = i;
-          let col2CellIdx = i + cellNumFirstCol;
-          helpRowInnerHTML =  "    <TD class='helpTblCell'>";
-          helpRowInnerHTML += helpCellTextArray[col1CellIdx].join("</TD><TD class='helpTblCell'>");
-          helpRowInnerHTML += "</TD>\n";
-          helpRowInnerHTML += "    <TD class='helpTblCellSpacer'>\n";
-          helpRowInnerHTML += "      <div id='colSpacer'></div>\n";
-          helpRowInnerHTML += "    </TD>\n";
-          if (helpCellTextArray[col2CellIdx]){
-            helpRowInnerHTML += "    <TD class='helpTblCell'>";
-            helpRowInnerHTML += helpCellTextArray[col2CellIdx].join("</TD><TD class='helpTblCell'>");
-            helpRowInnerHTML += "</TD>";
+        
+        //let w = window.open("", "HelpWindow", settings.styleHelp.winSettings);
+        //w.document.body.innerHTML = getHTML();
+        //var styleSheet = w.document.createElement("style");
+        //w.document.head.appendChild(styleSheet);
+        
+        if (window.menuDiv) {
+          if (window.menuDiv.style) {
+            if (window.menuDiv.style.display == "none") {
+              window.menuDiv.style.display = "block";
+            } else {
+              window.menuDiv.style.display = "none";
+            }
           }
-          helpRowInnerHTML += "\n";
-          helpRowArray[i] = helpRowInnerHTML;
         }
-        helpRowHTML =   "  <TR class='helpTblRow'>\n";
-        helpRowHTML += helpRowArray.join("  </TR>\n  <TR class='helpTblRow'>\n") + "  </TR>\n";
-
-        console.log(myTableOpenTag);
-        console.log(helpRowHTML);
-        helpTableHTML = myTableOpenTag;
-        helpTableHTML += helpRowHTML;
-        helpTableHTML += "</TABLE>";
-        console.log(helpTableHTML);
-        return helpTableHTML;
+        
+        //activeElement.focus();
+        //let parent = window.open('',"mainWin");
+        //parent.focus();
+        //mainWin.focus();
       }
+
+
       let openHelpOnKeyPress = openHelp;
       let getStyleHelpHTML = getHTML;
       return ({
@@ -408,6 +392,71 @@
       tasksListPane.style.display = "contents";
     }
   };
+  function setupMenuDiv() {
+    const addEl = dynamicUI.setAppendToElement();
+    const my_css2 = GM_getResourceText("IMPORTED_CSS2");
+    var menuDiv = document.createElement("div");
+    addEl.appendChild(menuDiv);
+    menuDiv.setAttribute("id", "menuDiv");
+    menuDiv.style.display = "none";
+    menuDiv.style.zIndex = "99999";
+    menuDiv.style.width = "1200px";
+    menuDiv.style.height = "1000px";
+    menuDiv.style.position = "fixed";
+    menuDiv.style.top = "0px";
+    menuDiv.style.right = "-500px";
+    menuDiv.innerHTML = getHTML();
+    var styleSheet = document.createElement("style");
+    styleSheet.innerText = my_css2;
+    document.head.appendChild(styleSheet);
+    window.menuDiv = menuDiv;
+  }
+  function getHTML() {
+    const helpCellTextArray = getHLCodesAsArray();
+
+    let helpRowArray = [];
+    let cellNum = helpCellTextArray.length;
+    let cellNumFirstCol = Math.ceil(cellNum / 2);
+    let helpRowInnerHTML, helpRowHTML, helpTableHTML;
+    for (let i = 1; i < cellNumFirstCol; i++) {
+      let col1CellIdx = i;
+      let col2CellIdx = i + cellNumFirstCol;
+      bullet = helpCellTextArray[col1CellIdx][0]
+      styleName = helpCellTextArray[col1CellIdx][1];
+      styleValue = helpCellTextArray[col1CellIdx][2]
+      helpRowInnerHTML = `    <TD class='helpTblCell' style='${styleName}:${styleValue};'>`;
+      //helpRowInnerHTML += helpCellTextArray[col1CellIdx].join("</TD><TD class='helpTblCell'>");
+      helpRowInnerHTML += bullet;
+      helpRowInnerHTML += "</TD>";
+      helpRowInnerHTML += `<TD class='helpTblCell' style='${styleName}:${styleValue};'>`;
+      helpRowInnerHTML += styleName;
+      helpRowInnerHTML += "</TD>";
+      helpRowInnerHTML += `<TD class='helpTblCell' style='${styleName}:${styleValue};'>`;
+      helpRowInnerHTML += styleValue;
+      helpRowInnerHTML += "</TD>";
+      helpRowInnerHTML += "\n";
+      helpRowInnerHTML += "    <TD class='helpTblCellSpacer'>\n";
+      helpRowInnerHTML += "      <div id='colSpacer'></div>\n";
+      helpRowInnerHTML += "    </TD>\n";
+      if (helpCellTextArray[col2CellIdx]) {
+        helpRowInnerHTML += "    <TD class='helpTblCell'>";
+        helpRowInnerHTML += helpCellTextArray[col2CellIdx].join("</TD><TD class='helpTblCell'>");
+        helpRowInnerHTML += "</TD>";
+      }
+      helpRowInnerHTML += "\n";
+      helpRowArray[i] = helpRowInnerHTML;
+    }
+    helpRowHTML = "  <TR class='helpTblRow'>\n";
+    helpRowHTML += helpRowArray.join("  </TR>\n  <TR class='helpTblRow'>\n") + "  </TR>\n";
+
+    console.log(myTableOpenTag);
+    console.log(helpRowHTML);
+    helpTableHTML = myTableOpenTag;
+    helpTableHTML += helpRowHTML;
+    helpTableHTML += "</TABLE>";
+    console.log(helpTableHTML);
+    return helpTableHTML;
+  }
   let dynamicUI = {
     setAppendToElement: function setAppendToElement() {
       //set the ** "AppendTo" Element **
@@ -586,7 +635,6 @@
       }
     } //END waitForElementToDisplay
   }
-
 
 
 

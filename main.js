@@ -27,12 +27,12 @@ function checkFor_Ctrl_Slash(evt) {
   logger(3).inside();
   //let openHelp = permUIChanges.setStyleHelp().openHelpOnKeyPress;
   evtHandlers.checkForShortcut(evt, 191, function(){
-    if (window.menuDiv) {
-      if (window.menuDiv.style) {
-        if (window.menuDiv.style.display == "none") {
-          window.menuDiv.style.display = "block";
+    if (window.helpDiv) {
+      if (window.helpDiv.style) {
+        if (window.helpDiv.style.display == "none") {
+          window.helpDiv.style.display = "block";
         } else {
-          window.menuDiv.style.display = "none";
+          window.helpDiv.style.display = "none";
         }
       }
     }

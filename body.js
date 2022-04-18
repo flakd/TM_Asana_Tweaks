@@ -13,7 +13,7 @@
 
     logger(2).next("setupDynamicUI()");
     setupDynamicUI();
-    setupMenuDiv();
+    setuphelpDiv();
 
     addEditorListeners();
 
@@ -367,12 +367,12 @@
         //var styleSheet = w.document.createElement("style");
         //w.document.head.appendChild(styleSheet);
         
-        if (window.menuDiv) {
-          if (window.menuDiv.style) {
-            if (window.menuDiv.style.display == "none") {
-              window.menuDiv.style.display = "block";
+        if (window.helpDiv) {
+          if (window.helpDiv.style) {
+            if (window.helpDiv.style.display == "none") {
+              window.helpDiv.style.display = "block";
             } else {
-              window.menuDiv.style.display = "none";
+              window.helpDiv.style.display = "none";
             }
           }
         }
@@ -401,25 +401,29 @@
       tasksListPane.style.display = "contents";
     }
   };
-  function setupMenuDiv() {
+  function setuphelpDiv() {
     const addEl = dynamicUI.setAppendToElement();
     const my_css2 = GM_getResourceText("IMPORTED_CSS2");
-    var menuDiv = document.createElement("div");
-    addEl.appendChild(menuDiv);
-    menuDiv.setAttribute("id", "menuDiv");
-    menuDiv.style.display = "none";
-    menuDiv.style.zIndex = "99999";
-    menuDiv.style.width = "1200px";
-    menuDiv.style.height = "1300px";
-    menuDiv.style.position = "fixed";
-    menuDiv.style.top = "0px";
-    menuDiv.style.right = "-900px";
-    menuDiv.innerHTML = getHTML();
+    var helpDiv = document.createElement("div");
+    addEl.appendChild(helpDiv);
+    helpDiv.setAttribute("id", "helpDiv");
+    helpDiv.style.display = "none";
+    helpDiv.style.zIndex = "99999";
+    helpDiv.style.width = "1200px";
+    helpDiv.style.height = "1300px";
+    helpDiv.style.position = "fixed";
+    helpDiv.style.top = "0px";
+    helpDiv.style.right = "-900px";
+    helpDiv.innerHTML = getHTML();
     var styleSheet = document.createElement("style");
     styleSheet.innerText = my_css2;
     document.head.appendChild(styleSheet);
-    window.menuDiv = menuDiv;
+    window.helpDiv = helpDiv;
+    $(function () {
+      $(helpDiv).draggable();
+    });    
   }
+  
   function getHTML() {
     const HLArray = getHLCodesAsArray();
 

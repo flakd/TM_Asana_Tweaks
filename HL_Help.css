@@ -1,3 +1,7 @@
+.helpTblHdr tr {
+  color: white;
+  background-color:black;
+}
 .helpTblCell {
   font-family: monospace;
   color: black;

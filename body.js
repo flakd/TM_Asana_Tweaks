@@ -5,7 +5,7 @@
 
     if (typeof window.numTimesRun === undefined) window.numTimesRun = 0;
 
-    console.log("numTimeRun = %s", window.numTimesRun++);
+    logger(3).w("numTimeRun = %s", window.numTimesRun++);
 
 
     logger(2).next("doPermUIChanges()");
@@ -78,7 +78,7 @@
     
     function setUIPadding() {
       //let burgerMenu = document.querySelector(".AsanaPageTopbar--showingBreadcrumbs");
-      console.log("burgerMenu: %s", burgerMenu);
+      logger(4).w("burgerMenu: %s", burgerMenu);
       burgerMenu.style.paddingBottom = "0px";
     }
     function setUITopBarHeight() {
@@ -402,26 +402,36 @@
     }
   };
   function setuphelpDiv() {
+    
     const addEl = dynamicUI.setAppendToElement();
-    const my_css2 = GM_getResourceText("IMPORTED_CSS2");
     var helpDiv = document.createElement("div");
     addEl.appendChild(helpDiv);
-    helpDiv.setAttribute("id", "helpDiv");
-    helpDiv.style.display = "none";
-    helpDiv.style.zIndex = "99999";
-    helpDiv.style.width = "1200px";
-    helpDiv.style.height = "1300px";
-    helpDiv.style.position = "fixed";
-    helpDiv.style.top = "0px";
-    helpDiv.style.right = "-900px";
     helpDiv.innerHTML = getHTML();
-    var styleSheet = document.createElement("style");
-    styleSheet.innerText = my_css2;
-    document.head.appendChild(styleSheet);
+    helpDiv.setAttribute("id", "helpDiv");    
     window.helpDiv = helpDiv;
-    $(function () {
-      $(helpDiv).draggable();
-    });    
+
+
+    const my_css2 = GM_getResourceText("IMPORTED_CSS2");
+    var styleSheet = document.createElement("style");
+    document.head.appendChild(styleSheet);
+    styleSheet.innerText = my_css2;
+
+    if (!jQuery) {
+      // jQuery is not loaded
+      console.error("JQuery Doesn't Work");
+      throw "JQuery Exception";
+    } else {
+      logger(3).inside("jQuery working");
+      if (typeof jQuery.ui !== 'undefined') {
+        logger(3).inside("jQuery UI working");
+        $("#helpDiv").draggable();
+      } else {
+        console.error("draggable not working");
+        throw "JQuery UI Exception";
+      }
+    }
+
+    //}); 
   }
   
   function getHTML() {
@@ -472,6 +482,8 @@
     helpRowHTML = "  <TR class='helpTblRow'>\n";
     helpRowHTML += helpRowArray.join("  </TR>\n  <TR class='helpTblRow'>\n") + "  </TR>\n";
 
+    const myTableOpenTag = GM_getResourceText("IMPORTED_HTML1");
+    logger(4).w(myTableOpenTag);    
     console.log(myTableOpenTag);
     console.log(helpRowHTML);
     helpTableHTML = myTableOpenTag;
@@ -535,14 +547,14 @@
 
 
       //store in global object in case I need it globally somewhere
-      window.ToolBarToggleButton = btn;
+      window.toolBarToggleBtn = btn;
 
 
       //if (isLoggingOn) console.log("window.highlightButton => " + window.highlightButton);
 
       // set to HIDE to start, since bars are visible when page loads initially
-      window.ToolBarToggleButton.innerText = "Toggle TBars";
-      window.ToolBarToggleButton.addEventListener('click', evtHandlers.toggleAllToolBars);
+      window.toolBarToggleBtn.innerText = "Toggle TBars";
+      window.toolBarToggleBtn.addEventListener('click', evtHandlers.toggleAllToolBars);
       if (isLoggingOn) console.log('btnToolBarToggle click event set to eHandlers.toggleAllToolBars()');
     },
     createToolBarBtn_HideBars: function createToolBarBtn_HideBars(addToElement) {
@@ -701,16 +713,15 @@
       //btn.classList.add('TopbarContingentUpgradeButton-button');
 
       appendToElement.appendChild(btn);
-      if (isLoggingOn) console.log("btnID: %s, btnClass: %s added to element:");
-      if (isLoggingOn) console.log(appendToElement);
+      logger(4).w(`btnID: ${btnID}, btnClass: ${btnClass} added to element: ${appendToElement}`);
 
       //store in global object in case I need it globally somewhere
-      window.ToolBarToggleButton = btn;
+      window.toolBarBtn[btnID] = btn;
 
       //if (isLoggingOn) console.log("window.highlightButton => " + window.highlightButton);
-      window.ToolBarToggleButton.innerText = btnText;
-      window.ToolBarToggleButton.addEventListener('click', btnClickHandler);
-      if (isLoggingOn) console.log('%s click event set to %s', btnID, btnClickHandler.name.toString());
+      window.toolBarBtn[btnID].innerText = btnText;
+      window.toolBarBtn[btnID].addEventListener('click', btnClickHandler);
+      logger(4).w(`${btnID} click event set to ${btnClickHandler.name}`);
     }
     function hideTopBar() {
       let topBar = document.getElementById('topbar');

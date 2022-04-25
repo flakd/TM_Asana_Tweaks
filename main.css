@@ -11,7 +11,7 @@
 /* #asana_main_page > div.ProjectPage > div.ProjectPage-list > div > div > div > div.FullWidthPageStructureWithDetailsOverlay-mainContent > div.SpreadsheetGridScroller-container > div.Scrollable--withCompositingLayer.Scrollable.Scrollable--vertical.SpreadsheetGridScroller-verticalScroller > div > div.is-compactMode.SpreadsheetGridContents--hasComplete.SpreadsheetGridContents.SpreadsheetPotGridContents > div:nth-child(1) > div > div > div > div:nth-child(2) > div > div.SpreadsheetTaskList.SpreadsheetTaskList--withRowNumbers.SpreadsheetPotGridContents-taskList > div:nth-child(3)
 .SpreadsheetTaskName--childFocused { 
  */
- #asana_main_page > 
+ /* #asana_main_page > 
   div.ProjectPage > 
   div.ProjectPage-list > 
   div > div > div > 
@@ -25,6 +25,8 @@
   div.SpreadsheetTaskList.SpreadsheetTaskList--withRowNumbers.SpreadsheetPotGridContents-taskList > 
   div:nth-child(3)
 .SpreadsheetTaskName--childFocused { 
+   */
+.SpreadsheetTaskName--childFocused {   
   background-color: green; 
   color: white;
   border-color: red; 

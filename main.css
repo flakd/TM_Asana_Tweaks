@@ -1,20 +1,38 @@
-/*
-.someClass { color: red; }
-.SpreadsheetRow--withShadedBackground < div { background-color: yellow; }
-.DraggableSpreadsheetTaskRow--withShadedBackground < div { background-color: yellow; }
-*/
 .SpreadsheetRow--withShadedBackground.DraggableSpreadsheetTaskRow--withShadedBackground > div > div { 
-  background-color: #004400;
+  background-color:darkgreen;
 }
-/*  .SpreadsheetTaskName SpreadsheetTaskName--editable SpreadsheetGridTaskNameCell-taskName  */
-.SpreadsheetTaskName--childFocused { background-color: #003300; color: white; 
+.SpreadsheetRow--withShadedBackground.DraggableSpreadsheetTaskRow--withShadedBackground .SpreadsheetRow-stickyCell {
+  background-color:yellow;
+}
+.SpreadsheetRow--withShadedBackground.DraggableSpreadsheetTaskRow--withShadedBackground > .SpreadsheetRow-stickyCellPlaceholder {
+  background-color:yellow;
+}
+
+/* #asana_main_page > div.ProjectPage > div.ProjectPage-list > div > div > div > div.FullWidthPageStructureWithDetailsOverlay-mainContent > div.SpreadsheetGridScroller-container > div.Scrollable--withCompositingLayer.Scrollable.Scrollable--vertical.SpreadsheetGridScroller-verticalScroller > div > div.is-compactMode.SpreadsheetGridContents--hasComplete.SpreadsheetGridContents.SpreadsheetPotGridContents > div:nth-child(1) > div > div > div > div:nth-child(2) > div > div.SpreadsheetTaskList.SpreadsheetTaskList--withRowNumbers.SpreadsheetPotGridContents-taskList > div:nth-child(3)
+.SpreadsheetTaskName--childFocused { 
+ */
+ #asana_main_page > 
+  div.ProjectPage > 
+  div.ProjectPage-list > 
+  div > div > div > 
+  div.FullWidthPageStructureWithDetailsOverlay-mainContent > 
+  div.SpreadsheetGridScroller-container > 
+  div.Scrollable--withCompositingLayer.Scrollable.Scrollable--vertical.SpreadsheetGridScroller-verticalScroller > 
+  div > 
+  div.is-compactMode.SpreadsheetGridContents--hasComplete.SpreadsheetGridContents.SpreadsheetPotGridContents > 
+  div:nth-child(1) > div > div > div > 
+  div:nth-child(2) > div > 
+  div.SpreadsheetTaskList.SpreadsheetTaskList--withRowNumbers.SpreadsheetPotGridContents-taskList > 
+  div:nth-child(3)
+.SpreadsheetTaskName--childFocused { 
+  background-color: green; 
+  color: white;
+  border-color: red; 
+  border-width: 5px;
 }
 ::selection {
   background: #ff5500;
 }
-/*
-.SpreadsheetTaskName--childFocused { caret-shape: block; } " // this CSS unsupported in Chrome as of 2022-01-25
-*/
 .blinking {
 
     animation: opacity 5s ease-in-out infinite;
@@ -31,16 +49,4 @@
   100% {
     opacity: 1;
   }
-}
-
-div.HStyle01, textarea.HStyle01 {/*  |1  */
-  background-color: white;
-  color: black;
-}
-div.HStyle10, textarea.HStyle10 {/*  FUP  */
-  background-color: turquoise;
-}
-div.HStyle12, textarea.HStyle12 {/*  √  */
-  background-color: purple;
-  color: white;
 }

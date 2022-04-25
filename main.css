@@ -1,17 +1,23 @@
 .SpreadsheetRow--withShadedBackground.DraggableSpreadsheetTaskRow--withShadedBackground > div > div { 
   background-color:darkgreen;
 }
-.SpreadsheetRow--withShadedBackground.DraggableSpreadsheetTaskRow--withShadedBackground .SpreadsheetRow-stickyCell {
+.SpreadsheetRow--withShadedBackground.DraggableSpreadsheetTaskRow--withShadedBackground > div > div >
+  div.DragHandle {
+  background-color:orange;
+}
+/* .SpreadsheetRow--withShadedBackground.DraggableSpreadsheetTaskRow--withShadedBackground .SpreadsheetRow-stickyCell {
   background-color:yellow;
 }
 .SpreadsheetRow--withShadedBackground.DraggableSpreadsheetTaskRow--withShadedBackground > .SpreadsheetRow-stickyCellPlaceholder {
   background-color:yellow;
-}
+} */
 
-/* #asana_main_page > div.ProjectPage > div.ProjectPage-list > div > div > div > div.FullWidthPageStructureWithDetailsOverlay-mainContent > div.SpreadsheetGridScroller-container > div.Scrollable--withCompositingLayer.Scrollable.Scrollable--vertical.SpreadsheetGridScroller-verticalScroller > div > div.is-compactMode.SpreadsheetGridContents--hasComplete.SpreadsheetGridContents.SpreadsheetPotGridContents > div:nth-child(1) > div > div > div > div:nth-child(2) > div > div.SpreadsheetTaskList.SpreadsheetTaskList--withRowNumbers.SpreadsheetPotGridContents-taskList > div:nth-child(3)
+/* 
+#asana_main_page > div.ProjectPage > div.ProjectPage-list > div > div > div > div.FullWidthPageStructureWithDetailsOverlay-mainContent > div.SpreadsheetGridScroller-container > div.Scrollable--withCompositingLayer.Scrollable.Scrollable--vertical.SpreadsheetGridScroller-verticalScroller > div > div.is-compactMode.SpreadsheetGridContents--hasComplete.SpreadsheetGridContents.SpreadsheetPotGridContents > div:nth-child(1) > div > div > div > div:nth-child(2) > div > div.SpreadsheetTaskList.SpreadsheetTaskList--withRowNumbers.SpreadsheetPotGridContents-taskList > div:nth-child(3)
 .SpreadsheetTaskName--childFocused { 
- */
- /* #asana_main_page > 
+*/
+/* 
+#asana_main_page > 
   div.ProjectPage > 
   div.ProjectPage-list > 
   div > div > div > 
@@ -24,10 +30,11 @@
   div:nth-child(2) > div > 
   div.SpreadsheetTaskList.SpreadsheetTaskList--withRowNumbers.SpreadsheetPotGridContents-taskList > 
   div:nth-child(3)
-.SpreadsheetTaskName--childFocused { 
-   */
-.SpreadsheetTaskName--childFocused {   
-  background-color: green; 
+  .SpreadsheetTaskName--childFocused {   
+*/
+  div.SpreadsheetTaskList > 
+  div .SpreadsheetTaskName--childFocused { 
+  background-color: blue; 
   color: white;
   border-color: red; 
   border-width: 5px;

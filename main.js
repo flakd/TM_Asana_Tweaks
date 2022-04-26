@@ -16,7 +16,6 @@ logger(3).w("TM script self-exec Scope: const logger = window.logger");
 
 
 window.numTimesScriptRun = 0;
-window.numTimesHighlightRun = 0;
 window.highlightButton;
 window.toggleBarsButton;
 window.hideBarsButton;

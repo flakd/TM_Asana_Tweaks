@@ -270,6 +270,11 @@
 
       // SO we must have an item, so set var 'task' to that item
       let task = tli[i];
+      if (typeof task.numTimesHighlightRun === 'undefined') {
+        task.numTimesHighlightRun = 1;
+      } else {
+        task.numTimesHighlightRun++;
+      }
 
       //check that the task has a description/text, otherwise error & continue to next in loop
       if (!task.innerHTML || !task.textContent) { errHelpers.nullError(this, 42); return; }
@@ -285,11 +290,40 @@
       let innerTaskTA = innerTask.querySelector("textarea");
       let innerTaskDetailsClick = task.querySelector("div.SpreadsheetGridTaskNameCell-detailsButtonClickArea")
 
+      function highlightCheckOnInput(event) {
+        //let's check this task item to see if it has ANY of the bullets -- this will SET the *LAST* BULLET it finds!!!
+        let numBullets = 0;
+
+        numBullets = checkForBullets(bullets, innerTaskTA.value, numBullets, task); //ENDFOR "Loop Through Bullets"
+        console.log("I changed:  numbullets = %s", numBullets);
+        // NO bullets FOUND, and NOT COMPLETED, so clear all formatting...
+        // BECAUSE we want to catch RECENT CHANGES where bullets were
+        // DELETED/REMOVED by user from the task, otherwise OLD BULLET
+        // formatting will linger
+        if (numBullets == 0) { // IF "We never found bullets" (numBullets COUNTER still ZERO)
+          //task.style.backgroundColor = "";
+          //task.style.color = "";
+          task.style = null;
+        }      
+      }
+      function hideDetailsPaneOnClick(event) {
+        console.log(`task.numTimesHighlightRun = ${task.numTimesHighlightRun}`);
+        let detailsPane = document.querySelector(window.detailsPane_Selector);
+        console.log(detailsPane.classList);
+        if (detailsPane.classList.contains(window.detailsPane_visibleClass)) {
+          detailsPane.classList.remove(window.detailsPane_visibleClass);
+          detailsPane.style.display = "none";
+        } else {
+          detailsPane.classList.add(window.detailsPane_visibleClass);
+          detailsPane.style.display = "block";
+        }
+      }
+
 
       /******************************************************
-        *    BEFORE we EVEN CHECK for bullets, let's see
-        *    if this is already completed -- if so, we
-        *    are going to set SPECIAL COMPLETED styling
+        /*    BEFORE we EVEN CHECK for bullets, let's see
+        /*    if this is already completed -- if so, we
+        /*    are going to set SPECIAL COMPLETED styling
         ******************************************************/
 
       if (task.classList.contains(completedTaskClassName)) {	//IF "Completed Task"
@@ -305,78 +339,38 @@
         continue;
       } // ENDIF "Completed Task"
       
-      //set oninput of every task I find -- I am running this...
-      //  ...(conditionalHighlighting()) every 10 sec, so any new 
-      //  tasks that created should get this as well
-      innerTaskTA.oninput = function(event){
-        //let's check this task item to see if it has ANY of the bullets -- this will SET the *LAST* BULLET it finds!!!
-        let numBullets = 0;
+      if (task.numTimesHighlightRun <= 1) {
 
-        numBullets = checkForBullets(bullets, innerTaskTA.value, numBullets, task);//ENDFOR "Loop Through Bullets"
-        console.log("I changed:  numbullets = %s",  numBullets);
+        //set oninput of every task I find -- I am running this...
+        //  ...(conditionalHighlighting()) every 10 sec, so any new 
+        //  tasks that created should get this as well
+        innerTaskTA.oninput = highlightCheckOnInput;
+
+      
+        innerTaskDetailsClick.addEventListener('click', hideDetailsPaneOnClick);
+      }
+
+      //let's check this task item to see if it has ANY of the bullets -- this will SET the *LAST* BULLET it finds!!!
+      let numBullets = 0;
+      numBullets = checkForBullets(bullets, content, numBullets, task);//ENDFOR "Loop Through Bullets"
+
+      /****
         // NO bullets FOUND, and NOT COMPLETED, so clear all formatting...
         // BECAUSE we want to catch RECENT CHANGES where bullets were
         // DELETED/REMOVED by user from the task, otherwise OLD BULLET
         // formatting will linger
-        if (numBullets == 0) { // IF "We never found bullets" (numBullets COUNTER still ZERO)
-          //task.style.backgroundColor = "";
-          //task.style.color = "";
-          task.style = null;
-        }//ENDIF "We never found bullets"
-      }
-      //innerTaskDetailsClick.click = function(event){
-      //  alert(`number of click events = ${innerTaskDetailsClick.click.length}`);
-      //}
-      
-      if (typeof innerTaskDetailsClick.numTimesHighlightRun === 'undefined') {
-        innerTaskDetailsClick.numTimesHighlightRun = 1
-        innerTaskDetailsClick.addEventListener('click', function (evt) {
-          console.log(`innerTaskDetailsClick.numTimesHighlightRun = ${innerTaskDetailsClick.numTimesHighlightRun}`);          
-          let detailsPane = document.querySelector(window.detailsPane_Selector);
-          console.log(detailsPane.classList);
-          if (detailsPane.classList.contains(window.detailsPane_visibleClass)) {
-            detailsPane.classList.remove(window.detailsPane_visibleClass);
-            detailsPane.style.display = "none";
-          } else {
-            detailsPane.classList.add(window.detailsPane_visibleClass);
-            detailsPane.style.display = "block";
-          }
-        });
-      } else {
-        innerTaskDetailsClick.numTimesHighlightRun++;
-      }
-
-      
-
-      let taskText = innerTaskDiv.innerHTML;
-
-      //let's check this task item to see if it has ANY of the bullets -- this will SET the *LAST* BULLET it finds!!!
-      let numBullets = 0;
-
-      numBullets = checkForBullets(bullets, content, numBullets, task);//ENDFOR "Loop Through Bullets"
-
-      ///////////   if (window.numTimesHighlightRun > 0){}
-
-
-      // NO bullets FOUND, and NOT COMPLETED, so clear all formatting...
-      // BECAUSE we want to catch RECENT CHANGES where bullets were
-      // DELETED/REMOVED by user from the task, otherwise OLD BULLET
-      // formatting will linger
+        *******/
       if (numBullets == 0) { // IF "We never found bullets" (numBullets COUNTER still ZERO)
         //task.style.backgroundColor = "";
         //task.style.color = "";
         task.style = null;
       }//ENDIF "We never found bullets"
 
-
       /*******************************************************
         // IF we've gotten THIS FAR, then we have
         // a VALID TASK, that is NOT COMPLETED
         *******************************************************/
-      logger(3).w(`TASK: `, `${ i }`, `  CONTENT: `, `${ taskText }`);
-
-
-
+      logger(3).w(`TASK: `, `${i}`, `  CONTENT: `, `${innerTaskDiv.innerHTML}`);
     }// ENDFOR "Loop through all Task Items"
 
     logger(2).btm();
@@ -438,6 +432,7 @@
       tasksListPane.style.display = "contents";
     }
   };
+
   function setuphelpDiv() {
     
     const addEl = dynamicUI.setAppendToElement();
@@ -529,6 +524,7 @@
     console.log(helpTableHTML);
     return helpTableHTML;
   }
+
   let dynamicUI = {
     setAppendToElement: function setAppendToElement() {
       //set the ** "AppendTo" Element **

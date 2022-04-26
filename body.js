@@ -3,9 +3,9 @@
     logger(2).top();
     //==========================================================
 
-    if (typeof window.numTimesRun === undefined) window.numTimesRun = 0;
+    if (typeof window.numTimesScriptRun === undefined) window.numTimesScriptRun = 0;
 
-    logger(3).w("numTimeRun = %s", window.numTimesRun++);
+    logger(3).w("numTimeRun = %s", window.numTimesScriptRun++);
 
 
     logger(2).next("doPermUIChanges()");
@@ -241,17 +241,23 @@
   }
   function conditionalHighlighting() {
     logger(2).top();
+    window.numTimesHighlightRun++;
 
     const bullets = getHLCodesAsArray();
 
-    let taskListItems = document.querySelectorAll(tasksSelector);
+    //  I changed the following 
+    //      FROM:
+    //        window.tasksSelector = ".SpreadsheetTaskName.SpreadsheetTaskName--editable.SpreadsheetGridTaskNameCell-taskName";
+    //      TO:
+    //        window.tasksSelector = ".SpreadsheetCell.SpreadsheetGridTaskNameCell.SpreadsheetTaskRow-nameCell";
+    let taskListItems = document.querySelectorAll(window.tasks_Selector);
     let tli = taskListItems;
 
     // CHECK that we have an ACTUAL LIST of tasks/items
     // IF we don't then ERROR TO CONSOLE & RETURN from this function
     if (!tli || !tli[0]) { errHelpers.nullError(this, 37); return; }
 
-    console.log("FOUND an ACTUAL List of %s Tasks by CLASS: '%s'", tli.length, tasksSelector)
+    console.log("FOUND an ACTUAL List of %s Tasks by CLASS: '%s'", tli.length, window.tasks_Selector)
 
     /*******************************************
       //  THE FOLLOWING DONE FOR EVERY TASK LINE
@@ -274,8 +280,11 @@
         //  NOW that we've isolated/captured our ACTUAL
         //	Task TEXT, let's examine it more closely
         ************************************************/
-      let innerTaskDiv = task.querySelector("div");
-      let innerTaskTA = task.querySelector("textarea");
+      let innerTask = task.querySelector(tasksSubLabel_Selector);
+      let innerTaskDiv = task.querySelector(tasksSubLabelDiv_Selector);
+      let innerTaskTA = innerTask.querySelector("textarea");
+      let innerTaskDetailsClick = task.querySelector("div.SpreadsheetGridTaskNameCell-detailsButtonClickArea")
+
 
       /******************************************************
         *    BEFORE we EVEN CHECK for bullets, let's see
@@ -296,7 +305,9 @@
         continue;
       } // ENDIF "Completed Task"
       
-      
+      //set oninput of every task I find -- I am running this...
+      //  ...(conditionalHighlighting()) every 10 sec, so any new 
+      //  tasks that created should get this as well
       innerTaskTA.oninput = function(event){
         //let's check this task item to see if it has ANY of the bullets -- this will SET the *LAST* BULLET it finds!!!
         let numBullets = 0;
@@ -313,6 +324,29 @@
           task.style = null;
         }//ENDIF "We never found bullets"
       }
+      //innerTaskDetailsClick.click = function(event){
+      //  alert(`number of click events = ${innerTaskDetailsClick.click.length}`);
+      //}
+      
+      if (typeof innerTaskDetailsClick.numTimesHighlightRun === 'undefined') {
+        innerTaskDetailsClick.numTimesHighlightRun = 1
+        innerTaskDetailsClick.addEventListener('click', function (evt) {
+          console.log(`innerTaskDetailsClick.numTimesHighlightRun = ${innerTaskDetailsClick.numTimesHighlightRun}`);          
+          let detailsPane = document.querySelector(window.detailsPane_Selector);
+          console.log(detailsPane.classList);
+          if (detailsPane.classList.contains(window.detailsPane_visibleClass)) {
+            detailsPane.classList.remove(window.detailsPane_visibleClass);
+            detailsPane.style.display = "none";
+          } else {
+            detailsPane.classList.add(window.detailsPane_visibleClass);
+            detailsPane.style.display = "block";
+          }
+        });
+      } else {
+        innerTaskDetailsClick.numTimesHighlightRun++;
+      }
+
+      
 
       let taskText = innerTaskDiv.innerHTML;
 
@@ -320,6 +354,9 @@
       let numBullets = 0;
 
       numBullets = checkForBullets(bullets, content, numBullets, task);//ENDFOR "Loop Through Bullets"
+
+      ///////////   if (window.numTimesHighlightRun > 0){}
+
 
       // NO bullets FOUND, and NOT COMPLETED, so clear all formatting...
       // BECAUSE we want to catch RECENT CHANGES where bullets were

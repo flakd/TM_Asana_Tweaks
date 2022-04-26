@@ -15,7 +15,8 @@ GM_addStyle(my_css1);
 logger(3).w("TM script self-exec Scope: const logger = window.logger");
 
 
-window.numTimesRun = 0;
+window.numTimesScriptRun = 0;
+window.numTimesHighlightRun = 0;
 window.highlightButton;
 window.toggleBarsButton;
 window.hideBarsButton;

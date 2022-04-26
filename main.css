@@ -1,9 +1,37 @@
 .SpreadsheetRow--withShadedBackground.DraggableSpreadsheetTaskRow--withShadedBackground > div > div { 
   background-color:darkgreen;
 }
-.SpreadsheetRow--withShadedBackground.DraggableSpreadsheetTaskRow--withShadedBackground > div > div >
-  div.DragHandle {
-  background-color:orange;
+.SpreadsheetRow--withShadedBackground > div > div > div.DragHandle {
+  background-color:darkgreen;
+}
+/*.SpreadsheetRow--withShadedBackground > div > div {   //this is preventing BLUE BACKGROUND ON SELECTED & EDITABLE CELL
+  background-color:darkgreen;
+}
+*/
+/* #highlightedCell > div.ProjectSpreadsheetGridRow-subtaskToggleButtonPlaceholder { */
+.SpreadsheetCell--isHighlighted {
+  background-color:darkgreen;  
+}
+/*
+SpreadsheetCell--isCompact SpreadsheetCell--isHighlighted SpreadsheetCell--withShadedBackground SpreadsheetCell--withoutLeftBorder SpreadsheetCell SpreadsheetGridTaskNameCell--rainbow SpreadsheetGridTaskNameCell SpreadsheetTaskRow-nameCell
+*/
+/* below is the key style to make CURRENT EDITABLE STICKY CELL the correct background color */
+.SpreadsheetCell--isCompact.SpreadsheetCell--isHighlighted.SpreadsheetCell--withShadedBackground.SpreadsheetCell--withoutLeftBorder.SpreadsheetCell.SpreadsheetGridTaskNameCell--rainbow.SpreadsheetGridTaskNameCell.SpreadsheetTaskRow-nameCell {
+  background-color:darkgreen;  
+}
+.SpreadsheetRow--withShadedBackground > div > div > span.SpreadsheetGridTaskNameCell-rowNumber {
+  background-color:darkgreen;
+  height: 100%;
+  position: relative;
+  top: 6px;
+  vertical-align:text-bottom;
+}
+.SpreadsheetRow--withShadedBackground > div > div > div.ProjectSpreadsheetGridRow-subtaskToggleButtonPlaceholder {
+  background-color:darkgreen;
+  width: 30px;
+}
+.SpreadsheetRow--withShadedBackground > div > div > div.TaskRowCompletionStatus {
+  background-color:darkgreen;
 }
 /* .SpreadsheetRow--withShadedBackground.DraggableSpreadsheetTaskRow--withShadedBackground .SpreadsheetRow-stickyCell {
   background-color:yellow;

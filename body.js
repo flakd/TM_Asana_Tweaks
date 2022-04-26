@@ -211,13 +211,12 @@
 
 
 
-  function checkForBullets(bullets, content, oldNumBullets, task) {
-    const HLArray = bullets;
-
-    let helpRowArray = [];
-    let numBullets = HLArray.length;
-    let helpRowInnerHTML, helpRowHTML, helpTableHTML;
-    for (let bIdx = 0; bIdx < numBullets; bIdx++) {
+  function checkForBullets(content, task) {
+    const HLArray = getHLCodesAsArray();
+    let numBulletsInArray = HLArray.length;
+    let numBulletsFound = 0;
+    
+    for (let bIdx = 0; bIdx < numBulletsInArray; bIdx++) {
       let bullet = HLArray[bIdx][0];
       let styles = HLArray[bIdx][1];
       for (let sIdx = 0; sIdx < styles.length; sIdx++) {
@@ -227,23 +226,20 @@
 
         //we found a(nother) bullet, so add it's styling
         if (content.includes(bullet)) { // IF "Found Bullet"
-          oldNumBullets = oldNumBullets + 1;
-          //if (bullet=="√") task.classList.add("\\" + bullet);
-          //task.classList.add(styleName);
+          numBulletsFound++;
           logger(41).w(`BULLET '${bullet}' =>`, `${styleName}: ${styleValue}`, "ClassList: ", task.classList);
-
           task.style[styleName] = styleValue;
         } //ENDIF "Found Bullet"
       }
 
     } //ENDFOR "Loop Through Bullets"
-    return numBullets;
+    return numBulletsFound;
   }
   function conditionalHighlighting() {
     logger(2).top();
     window.numTimesHighlightRun++;
 
-    const bullets = getHLCodesAsArray();
+    //const bullets = getHLCodesAsArray();
 
     //  I changed the following 
     //      FROM:
@@ -294,7 +290,7 @@
         //let's check this task item to see if it has ANY of the bullets -- this will SET the *LAST* BULLET it finds!!!
         let numBullets = 0;
 
-        numBullets = checkForBullets(bullets, innerTaskTA.value, numBullets, task); //ENDFOR "Loop Through Bullets"
+        numBullets = checkForBullets(innerTaskTA.value, task); //ENDFOR "Loop Through Bullets"
         console.log("I changed:  numbullets = %s", numBullets);
         // NO bullets FOUND, and NOT COMPLETED, so clear all formatting...
         // BECAUSE we want to catch RECENT CHANGES where bullets were
@@ -340,19 +336,16 @@
       } // ENDIF "Completed Task"
       
       if (task.numTimesHighlightRun <= 1) {
-
         //set oninput of every task I find -- I am running this...
         //  ...(conditionalHighlighting()) every 10 sec, so any new 
         //  tasks that created should get this as well
         innerTaskTA.oninput = highlightCheckOnInput;
-
-      
         innerTaskDetailsClick.addEventListener('click', hideDetailsPaneOnClick);
       }
 
       //let's check this task item to see if it has ANY of the bullets -- this will SET the *LAST* BULLET it finds!!!
       let numBullets = 0;
-      numBullets = checkForBullets(bullets, content, numBullets, task);//ENDFOR "Loop Through Bullets"
+      numBullets = checkForBullets(content, task);//ENDFOR "Loop Through Bullets"
 
       /****
         // NO bullets FOUND, and NOT COMPLETED, so clear all formatting...
@@ -370,7 +363,7 @@
         // IF we've gotten THIS FAR, then we have
         // a VALID TASK, that is NOT COMPLETED
         *******************************************************/
-      logger(3).w(`TASK: `, `${i}`, `  CONTENT: `, `${innerTaskDiv.innerHTML}`);
+      logger(3).w(`TASK: `, `${i}`, `  CONTENT: `, `${innerTaskTA.innerHTML}`);
     }// ENDFOR "Loop through all Task Items"
 
     logger(2).btm();
@@ -516,8 +509,8 @@
 
     const myTableOpenTag = GM_getResourceText("IMPORTED_HTML1");
     logger(4).w(myTableOpenTag);    
-    console.log(myTableOpenTag);
-    console.log(helpRowHTML);
+    //console.log(myTableOpenTag);
+    //console.log(helpRowHTML);
     helpTableHTML = myTableOpenTag;
     helpTableHTML += helpRowHTML;
     helpTableHTML += "</TABLE>";

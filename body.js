@@ -340,7 +340,7 @@
         //  ...(conditionalHighlighting()) every 10 sec, so any new 
         //  tasks that created should get this as well
         innerTaskTA.oninput = highlightCheckOnInput;
-        innerTaskDetailsClick.addEventListener('click', hideDetailsPaneOnClick);
+        //innerTaskDetailsClick.addEventListener('click', hideDetailsPaneOnClick);
       }
 
       //let's check this task item to see if it has ANY of the bullets -- this will SET the *LAST* BULLET it finds!!!

@@ -277,10 +277,10 @@
 
       // OK, SO, we must have actual text, so set var 'content' to that text
       let content = task.textContent;
-      /*****************************************
-        //  NOW that we've isolated/captured our ACTUAL
-        //	Task TEXT, let's examine it more closely
-        ************************************************/
+      /************************************************
+      *   NOW that we've isolated/captured our ACTUAL
+      *   Task TEXT, let's examine it more closely
+      ************************************************/
       let innerTask = task.querySelector(tasksSubLabel_Selector);
       let innerTaskDiv = task.querySelector(tasksSubLabelDiv_Selector);
       let innerTaskTA = innerTask.querySelector("textarea");
@@ -314,15 +314,12 @@
           detailsPane.style.display = "block";
         }
       }
-
-
-      /******************************************************
-        /*    BEFORE we EVEN CHECK for bullets, let's see
-        /*    if this is already completed -- if so, we
-        /*    are going to set SPECIAL COMPLETED styling
-        ******************************************************/
-
-      if (task.classList.contains(completedTaskClassName)) {	//IF "Completed Task"
+      /************************************************
+      *   BEFORE we EVEN CHECK for bullets, let's see
+      *   if this is already completed -- if so, we
+      *   are going to set SPECIAL COMPLETED styling
+      ************************************************/
+      if (innerTask.classList.contains(completedTaskClassName)) {	//IF "Completed Task"
 
         if (isLoggingOn) console.log("BUT This Task is COMPLETED=>'%c', CLASS contains '%s', FULL CLASSLIST='%c'", content, completedTaskClassName, task.classList);
         //  Task IS COMPLETED, so set special styling REGARDLESS

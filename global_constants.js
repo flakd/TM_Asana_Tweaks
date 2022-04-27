@@ -9,6 +9,7 @@ window.tasks_Selector = "div.SpreadsheetCell.SpreadsheetGridTaskNameCell.Spreads
 window.tasksSubLabel_Selector = "label.SpreadsheetTaskName.SpreadsheetTaskName--editable.SpreadsheetGridTaskNameCell-taskName";
 //window.tasksSubLabelDiv_Selector = "div.SpreadsheetTaskName--shadow";
 window.tasksSubLabelDiv_Selector = "div";
+window.tasksClickDetails_Selector = "div.SpreadsheetGridTaskNameCell-detailsButtonClickArea";
 window.detailsPane_Selector = ".FullWidthPageStructureWithDetailsOverlay-detailsOverlay";
 window.detailsPane_visibleClass = "FullWidthPageStructureWithDetailsOverlay-detailsOverlay--visible";
 

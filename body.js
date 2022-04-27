@@ -284,7 +284,7 @@
       let innerTask = task.querySelector(tasksSubLabel_Selector);
       let innerTaskDiv = task.querySelector(tasksSubLabelDiv_Selector);
       let innerTaskTA = innerTask.querySelector("textarea");
-      let innerTaskDetailsClick = task.querySelector("div.SpreadsheetGridTaskNameCell-detailsButtonClickArea")
+      let innerTaskDetailsClick = task.querySelector(tasksClickDetails_Selector);
 
       function highlightCheckOnInput(event) {
         //let's check this task item to see if it has ANY of the bullets -- this will SET the *LAST* BULLET it finds!!!

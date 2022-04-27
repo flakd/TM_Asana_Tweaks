@@ -35,10 +35,10 @@ same script below will be at UserScripts.com as well.
     // @require      	file:////myDev/js/TM/TM_Asana_Tweaks/start.js
     // @require      	file:////myDev/js/TM/TM_Asana_Tweaks/main.js
     
-    // @resource			IMPORTED_settings file:////myDev/js/TM/TM_Asana_Tweaks/settings.json
-    // @resource			IMPORTED_CSS1 file:////myDev/js/TM/TM_Asana_Tweaks/main.css
-    // @resource			IMPORTED_CSS2 file:////myDev/js/TM/TM_Asana_Tweaks/HL_Help.css
-    // @resource			IMPORTED_HTML1 file:////myDev/js/TM/TM_Asana_Tweaks/myTableOpenTag.html
+    // @resource        IMPORTED_settings file:////myDev/js/TM/TM_Asana_Tweaks/settings.json
+    // @resource        IMPORTED_CSS1 file:////myDev/js/TM/TM_Asana_Tweaks/main.css
+    // @resource        IMPORTED_CSS2 file:////myDev/js/TM/TM_Asana_Tweaks/HL_Help.css
+    // @resource        IMPORTED_HTML1 file:////myDev/js/TM/TM_Asana_Tweaks/myTableOpenTag.html
     // @grant      		GM_getResourceText
     // @grant      		GM_addStyle
     // ==/UserScript==

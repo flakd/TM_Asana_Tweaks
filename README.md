@@ -24,8 +24,8 @@ same script below will be at UserScripts.com as well.
     // @description  	Enhance and Tweak asana web interface to make it more legible and focus on immediate tasks
     // @author       	flakdinenno
     
-    // @match        	https://*.asana.com/*
-    // @match        	http://*.asana.com/*
+    // @match           https://*.asana.com/*
+    // @match           http://*.asana.com/*
 
     // @require         https://code.jquery.com/jquery-3.6.0.min.js#sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=
     // @require         https://code.jquery.com/ui/1.13.0/jquery-ui.min.js#sha256-hlKLmzaRlE8SCJC1Kw8zoUbU8BxA+8kR3gseuKfMjxA=
@@ -41,8 +41,8 @@ same script below will be at UserScripts.com as well.
     // @resource        IMPORTED_CSS1 file:////myDev/js/TM/TM_Asana_Tweaks/main.css
     // @resource        IMPORTED_CSS2 file:////myDev/js/TM/TM_Asana_Tweaks/HL_Help.css
     // @resource        IMPORTED_HTML1 file:////myDev/js/TM/TM_Asana_Tweaks/myTableOpenTag.html
-    // @grant      		GM_getResourceText
-    // @grant      		GM_addStyle
+    // @grant           GM_getResourceText
+    // @grant           GM_addStyle
     // ==/UserScript==
     
     (function() {

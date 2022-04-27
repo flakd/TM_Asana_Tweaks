@@ -4,6 +4,8 @@ A TamperMonkey userscript (set of scripts) to add custom highlighting to Asana
 
 1. Go to your browsers add-ons section and download the latest 
    TamperMonkey add-on/Extension
+1. Add/Start a new UserScript and replace the starter template/script 
+   with the script below
    
 ************************************************************************
 THIS IS VERY EARLY STAGE... please email me at flak@dinenno.com if you 
@@ -25,15 +27,15 @@ same script below will be at UserScripts.com as well.
     // @match        	https://*.asana.com/*
     // @match        	http://*.asana.com/*
 
-    // @require       https://code.jquery.com/jquery-3.6.0.min.js#sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=
-    // @require       https://code.jquery.com/ui/1.13.0/jquery-ui.min.js#sha256-hlKLmzaRlE8SCJC1Kw8zoUbU8BxA+8kR3gseuKfMjxA=
+    // @require         https://code.jquery.com/jquery-3.6.0.min.js#sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=
+    // @require         https://code.jquery.com/ui/1.13.0/jquery-ui.min.js#sha256-hlKLmzaRlE8SCJC1Kw8zoUbU8BxA+8kR3gseuKfMjxA=
 
-    // @require      	file:////myDev/js/logging/logger.js
-    // @require      	file:////myDev/js/TM/TM_Asana_Tweaks/global_constants.js
-    // @require      	file:////myDev/js/TM/TM_Asana_Tweaks/bullets.js
-    // @require      	file:////myDev/js/TM/TM_Asana_Tweaks/body.js
-    // @require      	file:////myDev/js/TM/TM_Asana_Tweaks/start.js
-    // @require      	file:////myDev/js/TM/TM_Asana_Tweaks/main.js
+    // @require         file:////myDev/js/logging/logger.js
+    // @require         file:////myDev/js/TM/TM_Asana_Tweaks/global_constants.js
+    // @require         file:////myDev/js/TM/TM_Asana_Tweaks/bullets.js
+    // @require         file:////myDev/js/TM/TM_Asana_Tweaks/body.js
+    // @require         file:////myDev/js/TM/TM_Asana_Tweaks/start.js
+    // @require         file:////myDev/js/TM/TM_Asana_Tweaks/main.js
     
     // @resource        IMPORTED_settings file:////myDev/js/TM/TM_Asana_Tweaks/settings.json
     // @resource        IMPORTED_CSS1 file:////myDev/js/TM/TM_Asana_Tweaks/main.css

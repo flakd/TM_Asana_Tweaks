@@ -18,11 +18,11 @@ same script below will be at UserScripts.com as well.
 ************************************************************************
 
     // ==UserScript==
-    // @name         	Asana_Tweaks
-    // @namespace    	https://*.asana.com
-    // @version      	4.0
-    // @description  	Enhance and Tweak asana web interface to make it more legible and focus on immediate tasks
-    // @author       	flakdinenno
+    // @name            Asana_Tweaks
+    // @namespace       https://*.asana.com
+    // @version         4.0
+    // @description     Enhance and Tweak asana web interface to make it more legible and focus on immediate tasks
+    // @author          Flak DiNennno (github.com/flakd)
     
     // @match           https://*.asana.com/*
     // @match           http://*.asana.com/*

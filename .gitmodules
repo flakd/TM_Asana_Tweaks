@@ -1,0 +1,3 @@
+[submodule "js_logging"]
+	path = js_logging
+	url = https://github.com/flakd/js_logging

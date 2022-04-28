@@ -7,12 +7,12 @@ logger(2, "GLOBAL function").top();
 
 const settingsText = GM_getResourceText("IMPORTED_settings");
 let settings = JSON.parse(settingsText);
-logger(4).w(settings.helpWinSettings)
+logger(1).w(settings.helpWinSettings)
 
 const my_css1 = GM_getResourceText("IMPORTED_CSS1");
 GM_addStyle(my_css1);
 
-logger(3).w("TM script self-exec Scope: const logger = window.logger");
+logger(1).w("TM script self-exec Scope: const logger = window.logger");
 
 
 window.numTimesScriptRun = 0;

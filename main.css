@@ -33,35 +33,7 @@ SpreadsheetCell--isCompact SpreadsheetCell--isHighlighted SpreadsheetCell--withS
 .SpreadsheetRow--withShadedBackground > div > div > div.TaskRowCompletionStatus {
   background-color:darkgreen;
 }
-/* .SpreadsheetRow--withShadedBackground.DraggableSpreadsheetTaskRow--withShadedBackground .SpreadsheetRow-stickyCell {
-  background-color:yellow;
-}
-.SpreadsheetRow--withShadedBackground.DraggableSpreadsheetTaskRow--withShadedBackground > .SpreadsheetRow-stickyCellPlaceholder {
-  background-color:yellow;
-} */
-
-/* 
-#asana_main_page > div.ProjectPage > div.ProjectPage-list > div > div > div > div.FullWidthPageStructureWithDetailsOverlay-mainContent > div.SpreadsheetGridScroller-container > div.Scrollable--withCompositingLayer.Scrollable.Scrollable--vertical.SpreadsheetGridScroller-verticalScroller > div > div.is-compactMode.SpreadsheetGridContents--hasComplete.SpreadsheetGridContents.SpreadsheetPotGridContents > div:nth-child(1) > div > div > div > div:nth-child(2) > div > div.SpreadsheetTaskList.SpreadsheetTaskList--withRowNumbers.SpreadsheetPotGridContents-taskList > div:nth-child(3)
-.SpreadsheetTaskName--childFocused { 
-*/
-/* 
-#asana_main_page > 
-  div.ProjectPage > 
-  div.ProjectPage-list > 
-  div > div > div > 
-  div.FullWidthPageStructureWithDetailsOverlay-mainContent > 
-  div.SpreadsheetGridScroller-container > 
-  div.Scrollable--withCompositingLayer.Scrollable.Scrollable--vertical.SpreadsheetGridScroller-verticalScroller > 
-  div > 
-  div.is-compactMode.SpreadsheetGridContents--hasComplete.SpreadsheetGridContents.SpreadsheetPotGridContents > 
-  div:nth-child(1) > div > div > div > 
-  div:nth-child(2) > div > 
-  div.SpreadsheetTaskList.SpreadsheetTaskList--withRowNumbers.SpreadsheetPotGridContents-taskList > 
-  div:nth-child(3)
-  .SpreadsheetTaskName--childFocused {   
-*/
-  div.SpreadsheetTaskList > 
-  div .SpreadsheetTaskName--childFocused { 
+div.SpreadsheetTaskList > div .SpreadsheetTaskName--childFocused { 
   background-color: blue; 
   color: white;
   border-color: red; 
@@ -71,7 +43,6 @@ SpreadsheetCell--isCompact SpreadsheetCell--isHighlighted SpreadsheetCell--withS
   background: #ff5500;
 }
 .blinking {
-
     animation: opacity 5s ease-in-out infinite;
     opacity: 1;
 }

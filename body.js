@@ -5,7 +5,7 @@
 
     if (typeof window.numTimesScriptRun === undefined) window.numTimesScriptRun = 0;
 
-    logger(3).w("numTimeRun = %s", window.numTimesScriptRun++);
+    logger(1).w("numTimeRun = %s", window.numTimesScriptRun++);
 
 
     logger(2).next("doPermUIChanges()");
@@ -78,7 +78,7 @@
     
     function setUIPadding() {
       //let burgerMenu = document.querySelector(".AsanaPageTopbar--showingBreadcrumbs");
-      logger(4).w("burgerMenu: %s", burgerMenu);
+      logger(1).w("burgerMenu: %s", burgerMenu);
       burgerMenu.style.paddingBottom = "0px";
     }
     function setUITopBarHeight() {
@@ -227,7 +227,7 @@
         //we found a(nother) bullet, so add it's styling
         if (content.includes(bullet)) { // IF "Found Bullet"
           numBulletsFound++;
-          logger(41).w(`BULLET '${bullet}' =>`, `${styleName}: ${styleValue}`, "ClassList: ", task.classList);
+          logger(3).w(`BULLET '${bullet}' =>`, `${styleName}: ${styleValue}`, "ClassList: ", task.classList);
           task.style[styleName] = styleValue;
         } //ENDIF "Found Bullet"
       }
@@ -253,11 +253,10 @@
     // IF we don't then ERROR TO CONSOLE & RETURN from this function
     if (!tli || !tli[0]) { errHelpers.nullError(this, 37); return; }
 
-    console.log("FOUND an ACTUAL List of %s Tasks by CLASS: '%s'", tli.length, window.tasks_Selector)
-
+    logger(2).w("FOUND an ACTUAL List of %s Tasks by CLASS: '%s'", tli.length, window.tasks_Selector);
     /*******************************************
-      //  THE FOLLOWING DONE FOR EVERY TASK LINE
-      *******************************************/
+    *   THE FOLLOWING DONE FOR EVERY TASK LINE
+    ********************************************/
     for (let i = 0; i < tli.length; i++) {	// FOR "Loop through all Task Items"
 
       // DBL-CHECK to see if there an item at this index in the tasklist,
@@ -275,8 +274,6 @@
       //check that the task has a description/text, otherwise error & continue to next in loop
       if (!task.innerHTML || !task.textContent) { errHelpers.nullError(this, 42); return; }
 
-      // OK, SO, we must have actual text, so set var 'content' to that text
-      let content = task.textContent;
       /************************************************
       *   NOW that we've isolated/captured our ACTUAL
       *   Task TEXT, let's examine it more closely
@@ -285,6 +282,9 @@
       let innerTaskDiv = task.querySelector(tasksSubLabelDiv_Selector);
       let innerTaskTA = innerTask.querySelector("textarea");
       let innerTaskDetailsClick = task.querySelector(tasksClickDetails_Selector);
+      // OK, SO, we must have actual text, so set var 'content' to that text
+      //let content = task.textContent;
+      let content = innerTaskTA.value;
 
       function highlightCheckOnInput(event) {
         //let's check this task item to see if it has ANY of the bullets -- this will SET the *LAST* BULLET it finds!!!
@@ -318,10 +318,11 @@
       *   BEFORE we EVEN CHECK for bullets, let's see
       *   if this is already completed -- if so, we
       *   are going to set SPECIAL COMPLETED styling
+      *   AND THEN *CONTINUE* to next task
       ************************************************/
       if (innerTask.classList.contains(completedTaskClassName)) {	//IF "Completed Task"
 
-        if (isLoggingOn) console.log("BUT This Task is COMPLETED=>'%c', CLASS contains '%s', FULL CLASSLIST='%c'", content, completedTaskClassName, task.classList);
+        logger(43).w(`DONE TASK:%c$'${content}', %cCLASS:%c'${completedTaskClassName}'`);
         //  Task IS COMPLETED, so set special styling REGARDLESS
         //  of bullets, and CONTINUE(skip) to NEXT Task Item
         task.style.backgroundColor = completedTaskBgColor;
@@ -340,27 +341,25 @@
         //innerTaskDetailsClick.addEventListener('click', hideDetailsPaneOnClick);
       }
 
-      //let's check this task item to see if it has ANY of the bullets -- this will SET the *LAST* BULLET it finds!!!
-      let numBullets = 0;
-      numBullets = checkForBullets(content, task);//ENDFOR "Loop Through Bullets"
-
-      /****
-        // NO bullets FOUND, and NOT COMPLETED, so clear all formatting...
-        // BECAUSE we want to catch RECENT CHANGES where bullets were
-        // DELETED/REMOVED by user from the task, otherwise OLD BULLET
-        // formatting will linger
-        *******/
-      if (numBullets == 0) { // IF "We never found bullets" (numBullets COUNTER still ZERO)
-        //task.style.backgroundColor = "";
-        //task.style.color = "";
+      
+      //  check this task item: ANY of the bullets present? if so, ONLY 
+      //  HIGHLIGHT based on the *LAST* bullet found
+      if (checkForBullets(content, task) == 0 ) { //IF "NO Bullets"
+        /****************************************************************
+        *   if ZERO (0): NO bullets FOUND...
+        *   and NOT COMPLETED, so clear all formatting...
+        *   BECAUSE we want to catch RECENT CHANGES where bullets were
+        *   DELETED/REMOVED by user from the task, otherwise OLD BULLET
+        *   formatting will linger
+        ****************************************************************/
         task.style = null;
-      }//ENDIF "We never found bullets"
+      }//ENDIF "NO Bullets"
 
       /*******************************************************
         // IF we've gotten THIS FAR, then we have
         // a VALID TASK, that is NOT COMPLETED
         *******************************************************/
-      logger(3).w(`TASK: `, `${i}`, `  CONTENT: `, `${innerTaskTA.innerHTML}`);
+      logger(41).w(`INC TASK:'#${i}', CONTENT:'${content}'`);
     }// ENDFOR "Loop through all Task Items"
 
     logger(2).btm();
@@ -505,13 +504,13 @@
     helpRowHTML += helpRowArray.join("  </TR>\n  <TR class='helpTblRow'>\n") + "  </TR>\n";
 
     const myTableOpenTag = GM_getResourceText("IMPORTED_HTML1");
-    logger(4).w(myTableOpenTag);    
+    logger(42).w(myTableOpenTag);    
     //console.log(myTableOpenTag);
     //console.log(helpRowHTML);
     helpTableHTML = myTableOpenTag;
     helpTableHTML += helpRowHTML;
     helpTableHTML += "</TABLE>";
-    console.log(helpTableHTML);
+    logger(42).w(helpTableHTML);
     return helpTableHTML;
   }
 
@@ -736,7 +735,7 @@
       //btn.classList.add('TopbarContingentUpgradeButton-button');
 
       appendToElement.appendChild(btn);
-      logger(4).w(`btnID: ${btnID}, btnClass: ${btnClass} added to element: ${appendToElement}`);
+      logger(2).w(`btnID: ${btnID}, btnClass: ${btnClass} added to element: ${appendToElement}`);
 
       //store in global object in case I need it globally somewhere
       window.toolBarBtn[btnID] = btn;
@@ -744,7 +743,7 @@
       //if (isLoggingOn) console.log("window.highlightButton => " + window.highlightButton);
       window.toolBarBtn[btnID].innerText = btnText;
       window.toolBarBtn[btnID].addEventListener('click', btnClickHandler);
-      logger(4).w(`${btnID} click event set to ${btnClickHandler.name}`);
+      logger(2).w(`${btnID} click event set to ${btnClickHandler.name}`);
     }
     function hideTopBar() {
       let topBar = document.getElementById('topbar');
